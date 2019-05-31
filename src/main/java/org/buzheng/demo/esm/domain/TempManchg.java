@@ -148,6 +148,10 @@ public class TempManchg {
         this.addressId = addressId;
     }
 
+    public String getAddressIdStr() {
+        return addressId.toString();
+    }
+    
     public Long getChinaMobile() {
         return chinaMobile;
     }

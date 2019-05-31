@@ -46,7 +46,7 @@ $(function() {
 			width : 50,
 			align : 'center'
 		}, {
-			field : 'addressId',
+			field : 'addressIdStr',
 			title : '地址ID',
 			width : 100,
 			align : 'center'
@@ -54,6 +54,11 @@ $(function() {
 			field : 'address',
 			title : '地址名称',
 			width : 350,
+			align : 'center'
+		}, {
+			field : 'address7',
+			title : '落图新地址ID',
+			width : 100,
 			align : 'center'
 		}, {
 			field : 'spType',
@@ -89,23 +94,50 @@ $(function() {
 	});
 });
 
-function savebatch() {
-	$.messager.confirm('确认', '您确定要保存？', function(r) {
-		$.ajax( {
-			type : 'POST',
-			url : '../../app/updateFileBatch',
-			data : $('#batchForm').serialize(),
-			dataType : 'json',
-			success : function(r) {
-				$.messager.show( {
-					title : '提示',
-					msg : r.msg
-				});
-				$("#dlgDetails").dialog("close");
-				$("#grid").datagrid("load");
-			}
+function closeDlgLuotu(){
+	$('#dlgLuotu').dialog('close');
+	$('#grid').datagrid('unselectAll');
+	$('#gridLuotu').datagrid('loadData', {total:0,rows:[]});
+}
+
+function deleteLuotuDetails(){
+	var rows = $('#gridLuotu').datagrid('getSelections');
+	if(rows == null || rows.length<1) {
+		$.messager.alert("提示", "请选择要删除的数据");
+		return false;
+	}
+	for(var i=0;i<rows.length;i++) {
+		var row = rows[i];
+		var rowIndex = $('#gridLuotu').datagrid('getRowIndex',row);
+		$('#gridLuotu').datagrid('deleteRow',rowIndex); 
+	}
+}
+function collectDetails(){
+	var rows = $('#grid').datagrid('getSelections');
+	var flag = true;
+	if(rows == null || rows.length<1){
+		$.messager.alert("提示", "请选择数据");
+		return false;
+	}
+	for(var i=0;i<rows.length;i++){
+			$('#gridLuotu').datagrid('appendRow',{
+				accessCode:rows[i].accessCode,
+				address: rows[i].address
+			});
+	}
+}
+
+function luotu() {
+	var rowsData = $('#grid').datagrid('getSelections');
+	if (!rowsData || rowsData.length==0) {
+		$.messager.show( {
+			title : '提示',
+			msg : '请选择一行数据'
 		});
-	});
+		return;
+	}		
+		$("#dlgLuotu").dialog("open").dialog('setTitle', '落图');
+		collectDetails();
 }
 
 serializeObject = function(form) {
@@ -121,9 +153,13 @@ serializeObject = function(form) {
 };
 
 function searchFun() {
+	$('#grid').datagrid('unselectAll');
+	$('#gridLuotu').datagrid('loadData', {total:0,rows:[]});
 	$('#grid').datagrid('load', serializeObject($('#admin_yhgl_searchForm')));
 }
 function clearFun() {
+	$('#grid').datagrid('unselectAll');
+	$('#gridLuotu').datagrid('loadData', {total:0,rows:[]});
 	$('#accessCode').textbox('setValue', '');
 	$('#begintime').datebox('setValue','');
 	$('#endtime').datebox('setValue','');
@@ -265,6 +301,12 @@ function details() {
 	}
 }
 
+function toDownLoadExcel(){  
+	var begintime = $('#begintime').val();
+	var endtime = $('#endtime').val(); 
+	var state = $('#state').val();
+	document.getElementById("downLoadExcel").href ="${pageContext.request.contextPath}/app/exportExcel?begintime=" + begintime +"&endtime=" + endtime + "&state=" + state;    
+}
 
 </script>
 
@@ -296,16 +338,50 @@ function details() {
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="details()">详情</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'" onclick="searchFun();">查询</a>
+					<a href="javascript:void(0);" class="easyui-linkbutton"
+					data-options="iconCls:'icon-edit'" onclick="luotu();">落图</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-redo'" onclick="clearFun();">重置</a>
-				<a href="javascript:void(0);" id="edit"
-					class="easyui-linkbutton" iconCls="icon-add" onclick="">导出excel</a>
+				<a href="javascript:void(0);" id="downLoadExcel"
+					class="easyui-linkbutton" iconCls="icon-add" onclick="toDownLoadExcel()">导出excel</a>
 			</form>
 		</div>
 		<div>
 			<table id="grid" toolbar="#tb" title="业务地址落图" iconCls="icon-search"
-				data-options="singleSelect:true,rownumbers:true,pagination:true,striped:true,fitColumns:true"></table>
+				data-options="singleSelect:false,rownumbers:true,pagination:true,striped:true,fitColumns:true"></table>
 		</div>
+		
+		<div id="dlgLuotu" class="easyui-dialog" style="width: 900px; height: 300px; padding: 10px 20px;" closed="true" buttons="#luotu-buttons">
+	<table id="gridLuotu" toolbar="#luotutb" class="easyui-datagrid" title="address to be locate on map"
+            data-options="singleSelect:true,collapsible:true">
+        <thead>
+            <tr>
+                <th data-options="field:'accessCode',width:180">接入号</th>
+                <th data-options="field:'address',width:300">资源地址</th>
+            </tr>
+        </thead>
+    </table>
+			<div>
+				<table>
+					<tr>
+						<td>新标准地址：</td>
+						<td><input id="newAddress" class="easyui-textbox" name="newAddress" /></td>
+					</tr>
+				</table>
+			</div>
+			<div id="luotutb" style="padding: 3px"
+			data-options="title:'查询条件',border:false">
+			<a href="javascript:void(0);" id="edit"
+					class="easyui-linkbutton" iconCls="icon-cancel" onclick="deleteLuotuDetails()">删除</a>
+		</div>
+		</div>
+		<div id="luotu-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton"
+		onclick="" iconcls="icon-save">保存</a>
+ 			<a href="javascript:void(0)" class="easyui-linkbutton"
+				onclick="closeDlgLuotu()"
+				iconcls="icon-cancel">关闭</a>
+		</div>	
 	</body>
 
 </html>

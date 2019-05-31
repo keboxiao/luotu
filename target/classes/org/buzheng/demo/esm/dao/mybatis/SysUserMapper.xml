@@ -32,6 +32,7 @@
 	    		u.username,
 	    		u.password,
 	    		u.name, 
+	    		u.phone, 
 	    		u.role_id, 
 	    		r.role_name,
 	    		u.group_id,

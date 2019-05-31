@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,21 +25,43 @@ public class TempManchgController {
 	public DataGrid find(HttpServletRequest request, HttpSession session) {
 		int page = Integer.parseInt(request.getParameter("page"));
 		int rows = Integer.parseInt(request.getParameter("rows"));
-		String obdCode = request.getParameter("obdCode");
+		String accessCode = request.getParameter("accessCode");
 		String begintime = request.getParameter("begintime");
 		String endtime = request.getParameter("endtime");
 		String state = request.getParameter("state");
 		Map<String, Object> params = new HashMap<String, Object>();
-		if (StringUtils.isNotBlank(obdCode)) {
-			params.put("obdCode", request.getParameter("obdCode"));
-		}
+		params.put("accessCode", accessCode);
+
 		if (StringUtils.isNotBlank(begintime)) {
 			params.put("begintime", request.getParameter("begintime"));
 		}
 		if (StringUtils.isNotBlank(endtime)) {
 			params.put("endtime", request.getParameter("endtime"));
 		}
-		params.put("state", state);
+		if (StringUtils.isNotBlank(state) && !state.equals("all")) {
+			params.put("state", state);
+		}
 		return tempManchgService.findPage(params, page, rows);
+	}
+
+	@RequestMapping(value = "/exportExcel", produces = "text/html;charset=UTF-8")
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String accessCode = request.getParameter("accessCode");
+		String begintime = request.getParameter("begintime");
+		String endtime = request.getParameter("endtime");
+		String state = request.getParameter("state");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("accessCode", accessCode);
+
+		if (StringUtils.isNotBlank(begintime)) {
+			params.put("begintime", request.getParameter("begintime"));
+		}
+		if (StringUtils.isNotBlank(endtime)) {
+			params.put("endtime", request.getParameter("endtime"));
+		}
+		if (StringUtils.isNotBlank(state) && !state.equals("all")) {
+			params.put("state", state);
+		}
+		tempManchgService.searchAndDownload(params, response);
 	}
 }

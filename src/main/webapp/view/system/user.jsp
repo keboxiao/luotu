@@ -84,6 +84,7 @@ $(function(){
 			{title:'用户名', field:'username'},
 			{title:'姓名', field:'name'},
 			{title:'机构', field:'groupName'},
+			{title:'手机', field:'phone'},
 			{title:'角色', field:'roleName', width:100}
 		]]
 	});
