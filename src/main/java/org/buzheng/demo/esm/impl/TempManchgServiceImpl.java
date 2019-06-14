@@ -3,6 +3,8 @@ package org.buzheng.demo.esm.impl;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +58,9 @@ public class TempManchgServiceImpl implements TempManchgService {
 		if (StringUtils.isNotBlank((String) params.get("state"))) {
 			criteria.andStateEqualTo(Long.parseLong((String) params.get("state")));
 		}
+		if (StringUtils.isNotBlank((String) params.get("manAccount"))) {
+			criteria.andManAccountEqualTo((String) params.get("manAccount"));
+		}
 		example.setOrderByClause(" address_id,id");
 		List<TempManchg> list = tempManchgMapper.selectByExample(example);
 		// 取分页信息
@@ -66,7 +71,7 @@ public class TempManchgServiceImpl implements TempManchgService {
 		return datagrid;
 	}
 
-	public void searchAndDownload(Map<String, Object> params,HttpServletResponse response) {
+	public void searchAndDownload(Map<String, Object> params, HttpServletResponse response) {
 		TempManchgExample example = new TempManchgExample();
 		TempManchgExample.Criteria criteria = example.createCriteria();
 		/*
@@ -166,4 +171,20 @@ public class TempManchgServiceImpl implements TempManchgService {
 		}
 	}
 
+	public boolean luotu(String address, String ids) {
+		TempManchgExample example = new TempManchgExample();
+		TempManchgExample.Criteria criteria = example.createCriteria();
+		String[] idArr = ids.split(",");
+		List<String> idList = new ArrayList<>();
+		for (int i = 0; i < idArr.length; i++) {
+			idList.add(idArr[i]);
+		}
+		criteria.andIdIn(idList);
+		TempManchg tempManchg = new TempManchg();
+		tempManchg.setAddress7(address);
+		tempManchg.setActDate(new Date());
+		tempManchg.setState((long) 2);
+		tempManchgMapper.updateByExampleSelective(tempManchg, example);
+		return true;
+	}
 }

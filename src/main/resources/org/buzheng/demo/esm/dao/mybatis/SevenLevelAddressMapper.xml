@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buzheng.demo.esm.dao.SevenLevelAddressMapper">
+  <resultMap id="BaseResultMap" type="org.buzheng.demo.esm.domain.SevenLevelAddress">
+    <result column="ADDR_ID" jdbcType="VARCHAR" property="addrId" />
+    <result column="LON" jdbcType="DECIMAL" property="lon" />
+    <result column="LAT" jdbcType="DECIMAL" property="lat" />
+    <result column="AMAP_LON" jdbcType="DECIMAL" property="amapLon" />
+    <result column="AMAP_LAT" jdbcType="DECIMAL" property="amapLat" />
+    <result column="ADDR_LEVEL1" jdbcType="VARCHAR" property="addrLevel1" />
+    <result column="ADDR_LEVEL2" jdbcType="VARCHAR" property="addrLevel2" />
+    <result column="ADDR_LEVEL3" jdbcType="VARCHAR" property="addrLevel3" />
+    <result column="ADDR_LEVEL4" jdbcType="VARCHAR" property="addrLevel4" />
+    <result column="ADDR_LEVEL5" jdbcType="VARCHAR" property="addrLevel5" />
+    <result column="ADDR_LEVEL6" jdbcType="VARCHAR" property="addrLevel6" />
+    <result column="ADDR_LEVEL7" jdbcType="VARCHAR" property="addrLevel7" />
+    <result column="FULL_NAME" jdbcType="VARCHAR" property="fullName" />
+    <result column="FORMATTED_ADDRESS" jdbcType="VARCHAR" property="formattedAddress" />
+    <result column="RET_JSON" jdbcType="VARCHAR" property="retJson" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ADDR_ID, LON, LAT, AMAP_LON, AMAP_LAT, ADDR_LEVEL1, ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
+    ADDR_LEVEL5, ADDR_LEVEL6, ADDR_LEVEL7, FULL_NAME, FORMATTED_ADDRESS, RET_JSON, STATE, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.SevenLevelAddressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SEVEN_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="org.buzheng.demo.esm.domain.SevenLevelAddressExample">
+    delete from SEVEN_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.SevenLevelAddress">
+    insert into SEVEN_LEVEL_ADDRESS (ADDR_ID, LON, LAT, 
+      AMAP_LON, AMAP_LAT, ADDR_LEVEL1, 
+      ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
+      ADDR_LEVEL5, ADDR_LEVEL6, ADDR_LEVEL7, 
+      FULL_NAME, FORMATTED_ADDRESS, RET_JSON, 
+      STATE, UPDATE_TIME)
+    values (#{addrId,jdbcType=VARCHAR}, #{lon,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, 
+      #{amapLon,jdbcType=DECIMAL}, #{amapLat,jdbcType=DECIMAL}, #{addrLevel1,jdbcType=VARCHAR}, 
+      #{addrLevel2,jdbcType=VARCHAR}, #{addrLevel3,jdbcType=VARCHAR}, #{addrLevel4,jdbcType=VARCHAR}, 
+      #{addrLevel5,jdbcType=VARCHAR}, #{addrLevel6,jdbcType=VARCHAR}, #{addrLevel7,jdbcType=VARCHAR}, 
+      #{fullName,jdbcType=VARCHAR}, #{formattedAddress,jdbcType=VARCHAR}, #{retJson,jdbcType=VARCHAR}, 
+      #{state,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.SevenLevelAddress">
+    insert into SEVEN_LEVEL_ADDRESS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="addrId != null">
+        ADDR_ID,
+      </if>
+      <if test="lon != null">
+        LON,
+      </if>
+      <if test="lat != null">
+        LAT,
+      </if>
+      <if test="amapLon != null">
+        AMAP_LON,
+      </if>
+      <if test="amapLat != null">
+        AMAP_LAT,
+      </if>
+      <if test="addrLevel1 != null">
+        ADDR_LEVEL1,
+      </if>
+      <if test="addrLevel2 != null">
+        ADDR_LEVEL2,
+      </if>
+      <if test="addrLevel3 != null">
+        ADDR_LEVEL3,
+      </if>
+      <if test="addrLevel4 != null">
+        ADDR_LEVEL4,
+      </if>
+      <if test="addrLevel5 != null">
+        ADDR_LEVEL5,
+      </if>
+      <if test="addrLevel6 != null">
+        ADDR_LEVEL6,
+      </if>
+      <if test="addrLevel7 != null">
+        ADDR_LEVEL7,
+      </if>
+      <if test="fullName != null">
+        FULL_NAME,
+      </if>
+      <if test="formattedAddress != null">
+        FORMATTED_ADDRESS,
+      </if>
+      <if test="retJson != null">
+        RET_JSON,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="addrId != null">
+        #{addrId,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        #{lon,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="amapLon != null">
+        #{amapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="amapLat != null">
+        #{amapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="addrLevel1 != null">
+        #{addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel2 != null">
+        #{addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel3 != null">
+        #{addrLevel3,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel4 != null">
+        #{addrLevel4,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel5 != null">
+        #{addrLevel5,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel6 != null">
+        #{addrLevel6,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel7 != null">
+        #{addrLevel7,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="formattedAddress != null">
+        #{formattedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="retJson != null">
+        #{retJson,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.buzheng.demo.esm.domain.SevenLevelAddressExample" resultType="java.lang.Long">
+    select count(*) from SEVEN_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SEVEN_LEVEL_ADDRESS
+    <set>
+      <if test="record.addrId != null">
+        ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lon != null">
+        LON = #{record.lon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lat != null">
+        LAT = #{record.lat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.amapLon != null">
+        AMAP_LON = #{record.amapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.amapLat != null">
+        AMAP_LAT = #{record.amapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addrLevel1 != null">
+        ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel2 != null">
+        ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel3 != null">
+        ADDR_LEVEL3 = #{record.addrLevel3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel4 != null">
+        ADDR_LEVEL4 = #{record.addrLevel4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel5 != null">
+        ADDR_LEVEL5 = #{record.addrLevel5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel6 != null">
+        ADDR_LEVEL6 = #{record.addrLevel6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel7 != null">
+        ADDR_LEVEL7 = #{record.addrLevel7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullName != null">
+        FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formattedAddress != null">
+        FORMATTED_ADDRESS = #{record.formattedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.retJson != null">
+        RET_JSON = #{record.retJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        STATE = #{record.state,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SEVEN_LEVEL_ADDRESS
+    set ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      LON = #{record.lon,jdbcType=DECIMAL},
+      LAT = #{record.lat,jdbcType=DECIMAL},
+      AMAP_LON = #{record.amapLon,jdbcType=DECIMAL},
+      AMAP_LAT = #{record.amapLat,jdbcType=DECIMAL},
+      ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      ADDR_LEVEL3 = #{record.addrLevel3,jdbcType=VARCHAR},
+      ADDR_LEVEL4 = #{record.addrLevel4,jdbcType=VARCHAR},
+      ADDR_LEVEL5 = #{record.addrLevel5,jdbcType=VARCHAR},
+      ADDR_LEVEL6 = #{record.addrLevel6,jdbcType=VARCHAR},
+      ADDR_LEVEL7 = #{record.addrLevel7,jdbcType=VARCHAR},
+      FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+      FORMATTED_ADDRESS = #{record.formattedAddress,jdbcType=VARCHAR},
+      RET_JSON = #{record.retJson,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

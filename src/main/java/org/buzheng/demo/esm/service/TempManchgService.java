@@ -10,6 +10,8 @@ public interface TempManchgService {
 
 	public DataGrid findPage(Map<String, Object> params, int page, int rows);
 
-	public void searchAndDownload(Map<String, Object> params,HttpServletResponse response);
+	public void searchAndDownload(Map<String, Object> params, HttpServletResponse response);
+
+	public boolean luotu(String address, String ids);
 
 }

@@ -23,7 +23,6 @@ body {
 }
 </style>
 		<script type="text/javascript">
-
 $(function() {
 	$('#grid').datagrid( {
 		url : '../../app/listservice',
@@ -94,6 +93,44 @@ $(function() {
 	});
 });
 
+function luotuSave() {
+	//alert("luotu");
+	var rows = $('#gridLuotu').datagrid('getRows');
+	var ids = [];
+	if (rows.length > 0) {
+		$.messager.confirm('确认', '您是否要保存？', function(r) {
+			if (r) {
+				for ( var i = 0; i < rows.length; i++) {
+					ids.push(rows[i].id);
+				}
+				$.ajax({
+					type: 'POST',
+					url : '${pageContext.request.contextPath}/app/luotu',
+					data : {
+						ids : ids.join(','),
+						address : $('#newAddress').val()
+					},
+					dataType : 'json',
+					success : function(r) {
+						$('#grid').datagrid('reload');
+						$('#grid').datagrid('unselectAll');
+						$('#gridLuotu').datagrid('loadData', {total:0,rows:[]});
+						$('#dlgLuotu').dialog('close');
+						$.messager.show({
+							title : '提示',
+							msg : r.msg
+						});
+					}
+				});
+			}
+		});
+	} else {
+		$.messager.show({
+			title : '提示',
+			msg : '请选择要落图的业务！'
+		});
+	}
+}
 function closeDlgLuotu(){
 	$('#dlgLuotu').dialog('close');
 	$('#grid').datagrid('unselectAll');
@@ -121,8 +158,10 @@ function collectDetails(){
 	}
 	for(var i=0;i<rows.length;i++){
 			$('#gridLuotu').datagrid('appendRow',{
+				id:rows[i].id,
 				accessCode:rows[i].accessCode,
-				address: rows[i].address
+				address: rows[i].address,
+				state: rows[i].state
 			});
 	}
 }
@@ -135,7 +174,17 @@ function luotu() {
 			msg : '请选择一行数据'
 		});
 		return;
-	}		
+	}	
+	for(var i=0;i<rowsData.length;i++){
+		if(rowsData[i].state>1){
+			$.messager.show( {
+				title : '提示',
+				msg : '请选择未经处理的业务！'
+			});
+			$('#grid').datagrid('unselectAll');
+			return;
+		}
+	}
 		$("#dlgLuotu").dialog("open").dialog('setTitle', '落图');
 		collectDetails();
 }
@@ -356,8 +405,10 @@ function toDownLoadExcel(){
             data-options="singleSelect:true,collapsible:true">
         <thead>
             <tr>
+             <th data-options="field:'id',width:180">id</th>
                 <th data-options="field:'accessCode',width:180">接入号</th>
                 <th data-options="field:'address',width:300">资源地址</th>
+                <th data-options="field:'state',width:100">状态</th>
             </tr>
         </thead>
     </table>
@@ -376,11 +427,8 @@ function toDownLoadExcel(){
 		</div>
 		</div>
 		<div id="luotu-buttons">
-		<a href="javascript:void(0)" class="easyui-linkbutton"
-		onclick="" iconcls="icon-save">保存</a>
- 			<a href="javascript:void(0)" class="easyui-linkbutton"
-				onclick="closeDlgLuotu()"
-				iconcls="icon-cancel">关闭</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="luotuSave()" iconcls="icon-save">保存</a>
+ 		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="closeDlgLuotu()" iconcls="icon-cancel">关闭</a>
 		</div>	
 	</body>
 

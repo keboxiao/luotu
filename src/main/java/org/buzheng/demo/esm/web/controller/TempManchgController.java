@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.buzheng.demo.esm.App;
 import org.buzheng.demo.esm.domain.DataGrid;
+import org.buzheng.demo.esm.domain.Json;
+import org.buzheng.demo.esm.domain.SysUser;
 import org.buzheng.demo.esm.service.TempManchgService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +44,10 @@ public class TempManchgController {
 		if (StringUtils.isNotBlank(state) && !state.equals("all")) {
 			params.put("state", state);
 		}
+		SysUser user = (SysUser) session.getAttribute(App.USER_SESSION_KEY);
+		if(!user.getRoleId().equals("root")){
+			params.put("manAccount", user.getUsername());
+		}
 		return tempManchgService.findPage(params, page, rows);
 	}
 
@@ -64,4 +71,21 @@ public class TempManchgController {
 		}
 		tempManchgService.searchAndDownload(params, response);
 	}
+
+	@RequestMapping("/luotu")
+	@ResponseBody
+	public Json luotu(HttpServletRequest request, HttpSession session) {
+		String ids = request.getParameter("ids");
+		String address = request.getParameter("address");
+		Json j = new Json();
+		if (tempManchgService.luotu(address, ids)) {
+			j.setMsg("操作成功");
+			j.setSuccess(true);
+		} else {
+			j.setMsg("保存失败");
+			j.setSuccess(false);
+		}
+		return j;
+	}
+
 }
