@@ -38,6 +38,16 @@ public class SevenLevelAddress {
 
     private Date updateTime;
 
+    private String addrLevel5Std;
+
+    private String addrLevel5Id;
+
+    private String addrLevel5FullName;
+
+    private Integer defNum;
+
+    private Integer handleFlag;
+
     public String getAddrId() {
         return addrId;
     }
@@ -172,5 +182,45 @@ public class SevenLevelAddress {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getAddrLevel5Std() {
+        return addrLevel5Std;
+    }
+
+    public void setAddrLevel5Std(String addrLevel5Std) {
+        this.addrLevel5Std = addrLevel5Std == null ? null : addrLevel5Std.trim();
+    }
+
+    public String getAddrLevel5Id() {
+        return addrLevel5Id;
+    }
+
+    public void setAddrLevel5Id(String addrLevel5Id) {
+        this.addrLevel5Id = addrLevel5Id == null ? null : addrLevel5Id.trim();
+    }
+
+    public String getAddrLevel5FullName() {
+        return addrLevel5FullName;
+    }
+
+    public void setAddrLevel5FullName(String addrLevel5FullName) {
+        this.addrLevel5FullName = addrLevel5FullName == null ? null : addrLevel5FullName.trim();
+    }
+
+    public Integer getDefNum() {
+        return defNum;
+    }
+
+    public void setDefNum(Integer defNum) {
+        this.defNum = defNum;
+    }
+
+    public Integer getHandleFlag() {
+        return handleFlag;
+    }
+
+    public void setHandleFlag(Integer handleFlag) {
+        this.handleFlag = handleFlag;
     }
 }

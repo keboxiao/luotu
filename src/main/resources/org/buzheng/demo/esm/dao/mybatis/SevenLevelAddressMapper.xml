@@ -19,6 +19,11 @@
     <result column="RET_JSON" jdbcType="VARCHAR" property="retJson" />
     <result column="STATE" jdbcType="DECIMAL" property="state" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ADDR_LEVEL5_STD" jdbcType="VARCHAR" property="addrLevel5Std" />
+    <result column="ADDR_LEVEL5_ID" jdbcType="VARCHAR" property="addrLevel5Id" />
+    <result column="ADDR_LEVEL5_FULL_NAME" jdbcType="VARCHAR" property="addrLevel5FullName" />
+    <result column="DEF_NUM" jdbcType="DECIMAL" property="defNum" />
+    <result column="HANDLE_FLAG" jdbcType="DECIMAL" property="handleFlag" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,7 +86,7 @@
   <sql id="Base_Column_List">
     ADDR_ID, LON, LAT, AMAP_LON, AMAP_LAT, ADDR_LEVEL1, ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
     ADDR_LEVEL5, ADDR_LEVEL6, ADDR_LEVEL7, FULL_NAME, FORMATTED_ADDRESS, RET_JSON, STATE, 
-    UPDATE_TIME
+    UPDATE_TIME, ADDR_LEVEL5_STD, ADDR_LEVEL5_ID, ADDR_LEVEL5_FULL_NAME, DEF_NUM, HANDLE_FLAG
   </sql>
   <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.SevenLevelAddressExample" resultMap="BaseResultMap">
     select
@@ -109,13 +114,17 @@
       ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
       ADDR_LEVEL5, ADDR_LEVEL6, ADDR_LEVEL7, 
       FULL_NAME, FORMATTED_ADDRESS, RET_JSON, 
-      STATE, UPDATE_TIME)
+      STATE, UPDATE_TIME, ADDR_LEVEL5_STD, 
+      ADDR_LEVEL5_ID, ADDR_LEVEL5_FULL_NAME, DEF_NUM, 
+      HANDLE_FLAG)
     values (#{addrId,jdbcType=VARCHAR}, #{lon,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, 
       #{amapLon,jdbcType=DECIMAL}, #{amapLat,jdbcType=DECIMAL}, #{addrLevel1,jdbcType=VARCHAR}, 
       #{addrLevel2,jdbcType=VARCHAR}, #{addrLevel3,jdbcType=VARCHAR}, #{addrLevel4,jdbcType=VARCHAR}, 
       #{addrLevel5,jdbcType=VARCHAR}, #{addrLevel6,jdbcType=VARCHAR}, #{addrLevel7,jdbcType=VARCHAR}, 
       #{fullName,jdbcType=VARCHAR}, #{formattedAddress,jdbcType=VARCHAR}, #{retJson,jdbcType=VARCHAR}, 
-      #{state,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP})
+      #{state,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, #{addrLevel5Std,jdbcType=VARCHAR}, 
+      #{addrLevel5Id,jdbcType=VARCHAR}, #{addrLevel5FullName,jdbcType=VARCHAR}, #{defNum,jdbcType=DECIMAL}, 
+      #{handleFlag,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.SevenLevelAddress">
     insert into SEVEN_LEVEL_ADDRESS
@@ -171,6 +180,21 @@
       <if test="updateTime != null">
         UPDATE_TIME,
       </if>
+      <if test="addrLevel5Std != null">
+        ADDR_LEVEL5_STD,
+      </if>
+      <if test="addrLevel5Id != null">
+        ADDR_LEVEL5_ID,
+      </if>
+      <if test="addrLevel5FullName != null">
+        ADDR_LEVEL5_FULL_NAME,
+      </if>
+      <if test="defNum != null">
+        DEF_NUM,
+      </if>
+      <if test="handleFlag != null">
+        HANDLE_FLAG,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="addrId != null">
@@ -223,6 +247,21 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addrLevel5Std != null">
+        #{addrLevel5Std,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel5Id != null">
+        #{addrLevel5Id,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel5FullName != null">
+        #{addrLevel5FullName,jdbcType=VARCHAR},
+      </if>
+      <if test="defNum != null">
+        #{defNum,jdbcType=DECIMAL},
+      </if>
+      <if test="handleFlag != null">
+        #{handleFlag,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -286,6 +325,21 @@
       <if test="record.updateTime != null">
         UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.addrLevel5Std != null">
+        ADDR_LEVEL5_STD = #{record.addrLevel5Std,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel5Id != null">
+        ADDR_LEVEL5_ID = #{record.addrLevel5Id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel5FullName != null">
+        ADDR_LEVEL5_FULL_NAME = #{record.addrLevel5FullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defNum != null">
+        DEF_NUM = #{record.defNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.handleFlag != null">
+        HANDLE_FLAG = #{record.handleFlag,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -309,7 +363,12 @@
       FORMATTED_ADDRESS = #{record.formattedAddress,jdbcType=VARCHAR},
       RET_JSON = #{record.retJson,jdbcType=VARCHAR},
       STATE = #{record.state,jdbcType=DECIMAL},
-      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      ADDR_LEVEL5_STD = #{record.addrLevel5Std,jdbcType=VARCHAR},
+      ADDR_LEVEL5_ID = #{record.addrLevel5Id,jdbcType=VARCHAR},
+      ADDR_LEVEL5_FULL_NAME = #{record.addrLevel5FullName,jdbcType=VARCHAR},
+      DEF_NUM = #{record.defNum,jdbcType=DECIMAL},
+      HANDLE_FLAG = #{record.handleFlag,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

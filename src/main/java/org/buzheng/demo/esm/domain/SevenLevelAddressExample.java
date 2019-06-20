@@ -1235,6 +1235,336 @@ public class SevenLevelAddressExample {
             addCriterion("UPDATE_TIME not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andAddrLevel5StdIsNull() {
+            addCriterion("ADDR_LEVEL5_STD is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdIsNotNull() {
+            addCriterion("ADDR_LEVEL5_STD is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_STD =", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdNotEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_STD <>", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdGreaterThan(String value) {
+            addCriterion("ADDR_LEVEL5_STD >", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdGreaterThanOrEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_STD >=", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdLessThan(String value) {
+            addCriterion("ADDR_LEVEL5_STD <", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdLessThanOrEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_STD <=", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdLike(String value) {
+            addCriterion("ADDR_LEVEL5_STD like", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdNotLike(String value) {
+            addCriterion("ADDR_LEVEL5_STD not like", value, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdIn(List<String> values) {
+            addCriterion("ADDR_LEVEL5_STD in", values, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdNotIn(List<String> values) {
+            addCriterion("ADDR_LEVEL5_STD not in", values, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdBetween(String value1, String value2) {
+            addCriterion("ADDR_LEVEL5_STD between", value1, value2, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5StdNotBetween(String value1, String value2) {
+            addCriterion("ADDR_LEVEL5_STD not between", value1, value2, "addrLevel5Std");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdIsNull() {
+            addCriterion("ADDR_LEVEL5_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdIsNotNull() {
+            addCriterion("ADDR_LEVEL5_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_ID =", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdNotEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_ID <>", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdGreaterThan(String value) {
+            addCriterion("ADDR_LEVEL5_ID >", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdGreaterThanOrEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_ID >=", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdLessThan(String value) {
+            addCriterion("ADDR_LEVEL5_ID <", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdLessThanOrEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_ID <=", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdLike(String value) {
+            addCriterion("ADDR_LEVEL5_ID like", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdNotLike(String value) {
+            addCriterion("ADDR_LEVEL5_ID not like", value, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdIn(List<String> values) {
+            addCriterion("ADDR_LEVEL5_ID in", values, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdNotIn(List<String> values) {
+            addCriterion("ADDR_LEVEL5_ID not in", values, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdBetween(String value1, String value2) {
+            addCriterion("ADDR_LEVEL5_ID between", value1, value2, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5IdNotBetween(String value1, String value2) {
+            addCriterion("ADDR_LEVEL5_ID not between", value1, value2, "addrLevel5Id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameIsNull() {
+            addCriterion("ADDR_LEVEL5_FULL_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameIsNotNull() {
+            addCriterion("ADDR_LEVEL5_FULL_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME =", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameNotEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME <>", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameGreaterThan(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME >", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameGreaterThanOrEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME >=", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameLessThan(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME <", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameLessThanOrEqualTo(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME <=", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameLike(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME like", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameNotLike(String value) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME not like", value, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameIn(List<String> values) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME in", values, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameNotIn(List<String> values) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME not in", values, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameBetween(String value1, String value2) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME between", value1, value2, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddrLevel5FullNameNotBetween(String value1, String value2) {
+            addCriterion("ADDR_LEVEL5_FULL_NAME not between", value1, value2, "addrLevel5FullName");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumIsNull() {
+            addCriterion("DEF_NUM is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumIsNotNull() {
+            addCriterion("DEF_NUM is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumEqualTo(Integer value) {
+            addCriterion("DEF_NUM =", value, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumNotEqualTo(Integer value) {
+            addCriterion("DEF_NUM <>", value, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumGreaterThan(Integer value) {
+            addCriterion("DEF_NUM >", value, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("DEF_NUM >=", value, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumLessThan(Integer value) {
+            addCriterion("DEF_NUM <", value, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumLessThanOrEqualTo(Integer value) {
+            addCriterion("DEF_NUM <=", value, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumIn(List<Integer> values) {
+            addCriterion("DEF_NUM in", values, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumNotIn(List<Integer> values) {
+            addCriterion("DEF_NUM not in", values, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumBetween(Integer value1, Integer value2) {
+            addCriterion("DEF_NUM between", value1, value2, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("DEF_NUM not between", value1, value2, "defNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagIsNull() {
+            addCriterion("HANDLE_FLAG is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagIsNotNull() {
+            addCriterion("HANDLE_FLAG is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagEqualTo(Integer value) {
+            addCriterion("HANDLE_FLAG =", value, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagNotEqualTo(Integer value) {
+            addCriterion("HANDLE_FLAG <>", value, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagGreaterThan(Integer value) {
+            addCriterion("HANDLE_FLAG >", value, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagGreaterThanOrEqualTo(Integer value) {
+            addCriterion("HANDLE_FLAG >=", value, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagLessThan(Integer value) {
+            addCriterion("HANDLE_FLAG <", value, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagLessThanOrEqualTo(Integer value) {
+            addCriterion("HANDLE_FLAG <=", value, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagIn(List<Integer> values) {
+            addCriterion("HANDLE_FLAG in", values, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagNotIn(List<Integer> values) {
+            addCriterion("HANDLE_FLAG not in", values, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagBetween(Integer value1, Integer value2) {
+            addCriterion("HANDLE_FLAG between", value1, value2, "handleFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandleFlagNotBetween(Integer value1, Integer value2) {
+            addCriterion("HANDLE_FLAG not between", value1, value2, "handleFlag");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -3,6 +3,7 @@ package org.buzheng.demo.esm.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.buzheng.demo.esm.dao.SevenLevelAddressMapper;
@@ -12,16 +13,22 @@ import org.buzheng.demo.esm.service.SevenLevelAddressService;
 import org.buzheng.demo.esm.util.GPSUtil;
 import org.buzheng.demo.esm.util.GaoDeMapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+@Service
 public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 
 	private static Logger logger = Logger.getLogger(SevenLevelAddressServiceImpl.class);
 
 	@Autowired
 	private SevenLevelAddressMapper sevenLevelAddressMapper;
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public int getAddressDataFromAMap() {
@@ -51,7 +58,8 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 						addr.setAddrLevel2(addressComponent.getString("district"));
 						addr.setAddrLevel3(addressComponent.getString("township"));
 						int idx = formatted.indexOf(addr.getAddrLevel3());
-						addr.setAddrLevel5(formatted.substring(idx + 1, formatted.length()));
+						addr.setAddrLevel5(
+								formatted.substring(idx + addr.getAddrLevel3().length(), formatted.length()));
 						addr.setState(2);
 						addr.setUpdateTime(new Date());
 						SevenLevelAddressExample addrExample = new SevenLevelAddressExample();
@@ -72,7 +80,29 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 
 	@Override
 	public int generateAddrLevelSeven() {
-		// TODO Auto-generated method stub
+		String sql = "select distinct addr_level5_full_name from seven_level_address where state=3";
+		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+		for (Map<String, Object> tmp : list) {
+			SevenLevelAddressExample example = new SevenLevelAddressExample();
+			SevenLevelAddressExample.Criteria criteria = example.createCriteria();
+			criteria.andStateEqualTo(3);
+			criteria.andAddrLevel5FullNameEqualTo(tmp.get("addr_level5_full_name").toString());
+			List<SevenLevelAddress> addrList = sevenLevelAddressMapper.selectByExample(example);
+			for (int i = 0; i < addrList.size(); i++) {
+				SevenLevelAddress sevenLevelAddr = addrList.get(i);
+				sevenLevelAddr.setDefNum(i + 1);
+				sevenLevelAddr.setAddrLevel7("自编" + sevenLevelAddr.getDefNum() + "号");
+				sevenLevelAddr.setState(4);
+				sevenLevelAddr.setUpdateTime(new Date());
+				sevenLevelAddr.setFullName(sevenLevelAddr.getAddrLevel1() + sevenLevelAddr.getAddrLevel2()
+						+ sevenLevelAddr.getAddrLevel3() + sevenLevelAddr.getAddrLevel4()
+						+ sevenLevelAddr.getAddrLevel5Std() + sevenLevelAddr.getAddrLevel7());
+				SevenLevelAddressExample examplet = new SevenLevelAddressExample();
+				SevenLevelAddressExample.Criteria criteriat = examplet.createCriteria();
+				criteriat.andAddrIdEqualTo(sevenLevelAddr.getAddrId());
+				sevenLevelAddressMapper.updateByExampleSelective(sevenLevelAddr, examplet);
+			}
+		}
 		return 0;
 	}
 
