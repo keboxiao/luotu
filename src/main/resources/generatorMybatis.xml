@@ -39,7 +39,7 @@
 		</javaClientGenerator>
 
 		<!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
-        <table schema="ziyuan" tableName="SEVEN_LEVEL_ADDRESS" domainObjectName="SevenLevelAddress"   >
+        <table schema="ziyuan" tableName="GET_ADDRESS_TASK" domainObjectName="GetAddressTask"   >
 			<!-- 如果设置为true，MBG不会讲schema或catalog添加到生成SQL中的表名上。 -->
 	  		<property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>

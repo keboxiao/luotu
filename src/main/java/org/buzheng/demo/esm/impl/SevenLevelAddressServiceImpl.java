@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.buzheng.demo.esm.dao.GetAddressTaskMapper;
 import org.buzheng.demo.esm.dao.SevenLevelAddressMapper;
+import org.buzheng.demo.esm.domain.GetAddressTask;
 import org.buzheng.demo.esm.domain.SevenLevelAddress;
 import org.buzheng.demo.esm.domain.SevenLevelAddressExample;
 import org.buzheng.demo.esm.service.SevenLevelAddressService;
@@ -30,8 +32,15 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	private GetAddressTaskMapper getAddressTaskMapper;
+
 	@Override
 	public int getAddressDataFromAMap() {
+		GetAddressTask getAddressTask = new GetAddressTask();
+		getAddressTask.setBeginTime(new Date());
+		getAddressTask.setState(1);
+		getAddressTaskMapper.insertSelective(getAddressTask);
 		SevenLevelAddressExample example = new SevenLevelAddressExample();
 		SevenLevelAddressExample.Criteria criteria = example.createCriteria();
 		criteria.andStateEqualTo(1);
@@ -75,6 +84,11 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 				}
 			}
 		}
+		getAddressTask.setTotal(list.size());
+		getAddressTask.setAchieve(c);
+		getAddressTask.setEndTime(new Date());
+		getAddressTask.setState(2);
+		getAddressTaskMapper.updateByPrimaryKey(getAddressTask);
 		return c;
 	}
 
