@@ -110,4 +110,18 @@ public class GaoDeMapUtil {
 		return null;
 	}
 
+	public static String getAddressJsonByLngAndLatBatch(String lonlatList) {
+		String url;
+		try {
+			url = "http://restapi.amap.com/v3/geocode/regeo?output=JSON&location=" + lonlatList + "&key="
+					+ "692a8acaed3d7c8724b08148966a6590" + "&radius=0&extensions=base&batch=true";
+			// HttpDownloader httpDownloader = new HttpDownloader();
+			String result = HttpServiceUtil.insureResponseBlockGet(url);
+			return result;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

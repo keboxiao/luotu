@@ -400,8 +400,8 @@ function toDownLoadExcel(){
 				data-options="singleSelect:false,rownumbers:true,pagination:true,striped:true,fitColumns:true"></table>
 		</div>
 		
-		<div id="dlgLuotu" class="easyui-dialog" style="width: 900px; height: 300px; padding: 10px 20px;" closed="true" buttons="#luotu-buttons">
-	<table id="gridLuotu" toolbar="#luotutb" class="easyui-datagrid" title="address to be locate on map"
+		<div id="dlgLuotu" class="easyui-dialog" style="width: 900px; height: 500px; padding: 10px 20px;" closed="true" buttons="#luotu-buttons">
+	<table id="gridLuotu" toolbar="#luotutb" class="easyui-datagrid"
             data-options="singleSelect:true,collapsible:true">
         <thead>
             <tr>
@@ -415,7 +415,7 @@ function toDownLoadExcel(){
 			<div>
 				<table>
 					<tr>
-						<td>新标准地址：</td>
+						<td>新标准地址ID：</td>
 						<td><input id="newAddress" class="easyui-textbox" name="newAddress" /></td>
 					</tr>
 				</table>

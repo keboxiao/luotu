@@ -100,7 +100,10 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.GetAddressTask" useGeneratedKeys="true" keyProperty="task_id">
+  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.GetAddressTask">
+    <selectKey resultType="java.lang.String" keyProperty="taskId" order="BEFORE">
+   SELECT sys_guid() FROM DUAL
+  </selectKey>
     insert into GET_ADDRESS_TASK (TASK_ID, TOTAL, ACHIEVE, 
       BEGIN_TIME, END_TIME, STATE
       )
@@ -108,7 +111,10 @@
       #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{state,jdbcType=DECIMAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.GetAddressTask" useGeneratedKeys="true" keyProperty="task_id">
+  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.GetAddressTask">
+  <selectKey resultType="java.lang.String" keyProperty="taskId" order="BEFORE">
+   SELECT sys_guid() FROM DUAL
+  </selectKey>
     insert into GET_ADDRESS_TASK
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="taskId != null">

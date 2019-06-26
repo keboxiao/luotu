@@ -6,12 +6,13 @@
 		
 	<insert id="save" parameterType="SysUser">
 	    INSERT INTO sys_user 
-	    	(username, password, name, role_id, group_id)
+	    	(username, password, name, role_id, group_id, phone)
 	    VALUES (#{username}, 
 	    		#{password}, 
 	    		#{name}, 
 	    		#{roleId}, 
-	    		#{groupId, jdbcType=VARCHAR})
+	    		#{groupId, jdbcType=VARCHAR},
+	    		#{phone})
 	</insert>
 	
 	<update id="update" parameterType="SysUser">

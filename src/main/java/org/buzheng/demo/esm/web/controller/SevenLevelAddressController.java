@@ -1,5 +1,6 @@
 package org.buzheng.demo.esm.web.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.buzheng.demo.esm.dao.GetAddressTaskMapper;
@@ -42,6 +43,27 @@ public class SevenLevelAddressController {
 		return j;
 	}
 	
+	@RequestMapping("getAddressDataBatchFromAMap")
+	@ResponseBody
+	public Json getAddressDataBatchFromAMap() {
+		GetAddressTask getAddressTask = new GetAddressTask();
+		getAddressTask.setBeginTime(new Date());
+		getAddressTask.setState(1);
+		getAddressTaskMapper.insertSelective(getAddressTask);
+		new Thread() {
+            public void run() {
+                // 写自己的业务逻辑
+            	sevenLevelAddressService.getAddressDataBatchFromAMap();
+            }
+        }.start();
+
+		Json j = new Json();
+		String msg = "成功添加一个任务";
+		j.setSuccess(true);
+		j.setMsg(msg);
+		return j;
+	}
+
 	@RequestMapping("listAddressTask")
 	@ResponseBody
 	public DataGrid listAddressTask(int page , int rows) {

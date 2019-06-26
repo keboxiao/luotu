@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.buzheng.demo.esm.dao.GetAddressTaskMapper;
 import org.buzheng.demo.esm.dao.SevenLevelAddressMapper;
@@ -19,6 +20,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 @Service
@@ -35,16 +37,26 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 	@Autowired
 	private GetAddressTaskMapper getAddressTaskMapper;
 
+	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
+
 	@Override
 	public int getAddressDataFromAMap() {
 		GetAddressTask getAddressTask = new GetAddressTask();
 		getAddressTask.setBeginTime(new Date());
 		getAddressTask.setState(1);
-		getAddressTaskMapper.insertSelective(getAddressTask);
 		SevenLevelAddressExample example = new SevenLevelAddressExample();
 		SevenLevelAddressExample.Criteria criteria = example.createCriteria();
 		criteria.andStateEqualTo(1);
 		List<SevenLevelAddress> list = sevenLevelAddressMapper.selectByExample(example);
+		getAddressTask.setTotal(list.size());
+		/*
+		 * SqlSession session = sqlSessionFactory.openSession(); try {
+		 * session.insert(
+		 * "org.buzheng.demo.esm.dao.GetAddressTaskMapper.insertSelective",
+		 * getAddressTask); session.commit(); } finally { session.close(); }
+		 */
+		getAddressTaskMapper.insertSelective(getAddressTask);
 		int c = 0;
 		for (SevenLevelAddress addr : list) {
 			double[] latlon = GPSUtil.gps84_To_Gcj02(addr.getLat().doubleValue(), addr.getLon().doubleValue());
@@ -84,11 +96,77 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 				}
 			}
 		}
-		getAddressTask.setTotal(list.size());
+		// getAddressTask.setTotal(list.size());
 		getAddressTask.setAchieve(c);
 		getAddressTask.setEndTime(new Date());
 		getAddressTask.setState(2);
 		getAddressTaskMapper.updateByPrimaryKey(getAddressTask);
+		return c;
+	}
+
+	public int getAddressDataBatchFromAMap() {
+		GetAddressTask getAddressTask = new GetAddressTask();
+		getAddressTask.setBeginTime(new Date());
+		getAddressTask.setState(1);
+		SevenLevelAddressExample example = new SevenLevelAddressExample();
+		SevenLevelAddressExample.Criteria criteria = example.createCriteria();
+		criteria.andStateEqualTo(1);
+		List<SevenLevelAddress> list = sevenLevelAddressMapper.selectByExample(example);
+		getAddressTask.setTotal(list.size());
+		getAddressTaskMapper.insertSelective(getAddressTask);
+		//getAddressTask.setTaskId(taskId);
+		int c = 0;
+		for (int i = 0; i < list.size(); i++) {
+			int j;
+			String lonlatList = "";
+			for (j = 0; j < 20 && i + j < list.size(); j++) {
+				Double lon = list.get(i + j).getLon().doubleValue();
+				Double lat = list.get(i + j).getLat().doubleValue();
+				double[] latlon = GPSUtil.gps84_To_Gcj02(lat, lon);
+				String tmp = "" + latlon[1] + "," + latlon[0];
+				lonlatList += tmp;
+				lonlatList += "|";
+			}
+			lonlatList = lonlatList.substring(0, lonlatList.length() - 1);
+			String res = GaoDeMapUtil.getAddressJsonByLngAndLatBatch(lonlatList);
+			if (res != null) {
+				// 将获取结果转为json 数据
+				JSONObject obj = JSON.parseObject(res);
+				if (obj.get("status").toString().equals("1")) {
+					// 如果没有返回-1
+					JSONArray regeocodes = obj.getJSONArray("regeocodes");
+					for (j = 0; j < regeocodes.size(); j++) {
+						// 在regeocode中拿到 formatted_address 具体位置
+						SevenLevelAddress addr = list.get(i + j);
+						JSONObject regeocode = regeocodes.getJSONObject(j);
+						String formatted = regeocode.get("formatted_address").toString();
+						addr.setFormattedAddress(formatted);
+						JSONObject addressComponent = regeocode.getJSONObject("addressComponent");
+						addr.setAddrLevel1(addressComponent.getString("city"));
+						addr.setAddrLevel2(addressComponent.getString("district"));
+						addr.setAddrLevel3(addressComponent.getString("township"));
+						int idx = formatted.indexOf(addr.getAddrLevel3());
+						addr.setAddrLevel5(
+								formatted.substring(idx + addr.getAddrLevel3().length(), formatted.length()));
+						addr.setState(2);
+						addr.setUpdateTime(new Date());
+						addr.setRetJson(regeocode.toJSONString());
+						SevenLevelAddressExample addrExample = new SevenLevelAddressExample();
+						SevenLevelAddressExample.Criteria addrCriteria = addrExample.createCriteria();
+						addrCriteria.andAddrIdEqualTo(addr.getAddrId());
+						sevenLevelAddressMapper.updateByExampleSelective(addr, addrExample);
+						c++;
+					}
+				} else {
+					logger.info("请求错误！");
+				}
+			}
+		}
+		// getAddressTask.setTotal(list.size());
+		getAddressTask.setAchieve(c);
+		getAddressTask.setEndTime(new Date());
+		getAddressTask.setState(2);
+		getAddressTaskMapper.updateByPrimaryKeySelective(getAddressTask);
 		return c;
 	}
 

@@ -6,4 +6,6 @@ public interface SevenLevelAddressService {
 	
 	public int generateAddrLevelSeven();
 	
+	public int getAddressDataBatchFromAMap();
+	
 }

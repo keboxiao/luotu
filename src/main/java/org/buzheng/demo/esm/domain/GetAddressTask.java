@@ -1,5 +1,6 @@
 package org.buzheng.demo.esm.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GetAddressTask {
@@ -42,7 +43,12 @@ public class GetAddressTask {
     public Date getBeginTime() {
         return beginTime;
     }
-
+    
+    public String getFormatBeginTime() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(beginTime);
+    }
+    
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
@@ -51,6 +57,11 @@ public class GetAddressTask {
         return endTime;
     }
 
+    public String getFormatEndTime() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(endTime);
+    }
+   
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }

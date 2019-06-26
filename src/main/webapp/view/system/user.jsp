@@ -50,6 +50,11 @@
             </select>
         </div>
         
+        <div class="fitem">
+            <label>手机:</label>
+           <input type="text" name="phone" />
+        </div>
+
         <input type="hidden" name="userId" value="" />
         
         <p class="ftips">提示：默认密码为 123456</p>

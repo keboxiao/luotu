@@ -2,6 +2,7 @@ package org.buzheng.demo.esm.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +62,20 @@ public class TempManchgServiceImpl implements TempManchgService {
 		if (StringUtils.isNotBlank((String) params.get("manAccount"))) {
 			criteria.andManAccountEqualTo((String) params.get("manAccount"));
 		}
+		String begintime = (String) params.get("begintime");
+		boolean flag = false;
+		if (StringUtils.isNotBlank(begintime)) {
+			criteria.andActDateIsNotNull();
+			flag = true;
+			criteria.andActDateGreaterThanOrEqualTo(strToDate(begintime));
+		}
+		String endtime = (String) params.get("endtime");
+		if (StringUtils.isNotBlank(endtime)) {
+			if (!flag) {
+				criteria.andActDateIsNotNull();
+			}
+			criteria.andActDateLessThanOrEqualTo(strToDate(endtime));
+		}
 		example.setOrderByClause(" address_id,id");
 		List<TempManchg> list = tempManchgMapper.selectByExample(example);
 		// 取分页信息
@@ -70,7 +85,19 @@ public class TempManchgServiceImpl implements TempManchgService {
 		datagrid.setTotal(pageInfo.getTotal());
 		return datagrid;
 	}
-
+	/**
+	   * 将短时间格式字符串转换为时间 yyyy-MM-dd 
+	   * 
+	   * @param strDate
+	   * @return
+	   */
+	public static Date strToDate(String strDate) {
+	   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	   ParsePosition pos = new ParsePosition(0);
+	   Date strtodate = formatter.parse(strDate, pos);
+	   return strtodate;
+	}
+	
 	public void searchAndDownload(Map<String, Object> params, HttpServletResponse response) {
 		TempManchgExample example = new TempManchgExample();
 		TempManchgExample.Criteria criteria = example.createCriteria();

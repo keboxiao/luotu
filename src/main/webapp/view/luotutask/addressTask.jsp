@@ -32,7 +32,7 @@ $(function() {
 		columns : [ [ {
 			field : 'taskId',
 			title : 'id',
-			width : 138,
+			width : 150,
 			align : 'center'
 		}, {
 			field : 'total',
@@ -46,12 +46,12 @@ $(function() {
 			width : 100,
 			align : 'center'
 		}, {
-			field : 'beginTime',
+			field : 'formatBeginTime',
 			title : '任务开始时间',
 			width : 200,
 			align : 'center'
 		} , {
-			field : 'endTime',
+			field : 'formatEndTime',
 			title : '任务结束时间',
 			width : 100,
 			align : 'center'
@@ -87,6 +87,8 @@ function clearFun() {
 }
 
 function newTask() {
+	$.messager.confirm('确认', '您确定要新建地址获取任务吗？', function(r) {
+	if (r) {
 	$.ajax( {
 		type : 'POST',
 		url : '../../app/getAddressDataFromAMap',
@@ -99,6 +101,8 @@ function newTask() {
 			});
 			$("#grid").datagrid("load");
 		}
+	});
+	}
 	});
 }
 
@@ -138,7 +142,7 @@ function newTask() {
 			</form>
 		</div>
 		<div>
-			<table id="grid" toolbar="#tb" title="obd定位任务" iconCls="icon-search"
+			<table id="grid" toolbar="#tb" title="获取地址任务" iconCls="icon-search"
 				data-options="singleSelect:true,rownumbers:true,pagination:true,striped:true,fitColumns:true"></table>
 		</div>
 	</body>
