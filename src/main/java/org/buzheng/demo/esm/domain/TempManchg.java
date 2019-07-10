@@ -1,170 +1,222 @@
 package org.buzheng.demo.esm.domain;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class TempManchg {
-    private String id;
+	private String id;
 
-    private String accessCode;
+	private String accessCode;
 
-    private String address;
+	private String address;
 
-    private String manAccount;
+	private String manAccount;
 
-    private String address7;
+	private String address7;
 
-    private Long ifCqt;
+	private Long ifCqt;
 
-    private String spType;
+	private String spType;
 
-    private String spCode;
+	private String spCode;
 
-    private Date actDate;
+	private Date actDate;
 
-    private Long state;
+	private Long state;
 
-    private String branch;
+	private String branch;
 
-    private String region;
+	private String region;
 
-    private String centre;
+	private String centre;
 
-    private BigDecimal addressId;
+	private BigDecimal addressId;
 
-    private Long chinaMobile;
+	private Long chinaMobile;
 
-    private Long chinaUnion;
+	private Long chinaUnion;
 
-    public String getId() {
-        return id;
-    }
+	private String custName;
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
+	private BigDecimal id5;
 
-    public String getAccessCode() {
-        return accessCode;
-    }
+	private String stAddr;
 
-    public void setAccessCode(String accessCode) {
-        this.accessCode = accessCode == null ? null : accessCode.trim();
-    }
+	private Long ifPhone;
 
-    public String getAddress() {
-        return address;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
+	public void setId(String id) {
+		this.id = id == null ? null : id.trim();
+	}
 
-    public String getManAccount() {
-        return manAccount;
-    }
+	public String getAccessCode() {
+		return accessCode;
+	}
 
-    public void setManAccount(String manAccount) {
-        this.manAccount = manAccount == null ? null : manAccount.trim();
-    }
+	public void setAccessCode(String accessCode) {
+		this.accessCode = accessCode == null ? null : accessCode.trim();
+	}
 
-    public String getAddress7() {
-        return address7;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setAddress7(String address7) {
-        this.address7 = address7 == null ? null : address7.trim();
-    }
+	public void setAddress(String address) {
+		this.address = address == null ? null : address.trim();
+	}
 
-    public Long getIfCqt() {
-        return ifCqt;
-    }
+	public String getManAccount() {
+		return manAccount;
+	}
 
-    public void setIfCqt(Long ifCqt) {
-        this.ifCqt = ifCqt;
-    }
+	public void setManAccount(String manAccount) {
+		this.manAccount = manAccount == null ? null : manAccount.trim();
+	}
 
-    public String getSpType() {
-        return spType;
-    }
+	public String getAddress7() {
+		return address7;
+	}
 
-    public void setSpType(String spType) {
-        this.spType = spType == null ? null : spType.trim();
-    }
+	public void setAddress7(String address7) {
+		this.address7 = address7 == null ? null : address7.trim();
+	}
 
-    public String getSpCode() {
-        return spCode;
-    }
+	public Long getIfCqt() {
+		return ifCqt;
+	}
 
-    public void setSpCode(String spCode) {
-        this.spCode = spCode == null ? null : spCode.trim();
-    }
+	public void setIfCqt(Long ifCqt) {
+		this.ifCqt = ifCqt;
+	}
 
-    public Date getActDate() {
-        return actDate;
-    }
+	public String getSpType() {
+		return spType;
+	}
 
-    public void setActDate(Date actDate) {
-        this.actDate = actDate;
-    }
+	public void setSpType(String spType) {
+		this.spType = spType == null ? null : spType.trim();
+	}
 
-    public Long getState() {
-        return state;
-    }
+	public String getSpCode() {
+		return spCode;
+	}
 
-    public void setState(Long state) {
-        this.state = state;
-    }
+	public void setSpCode(String spCode) {
+		this.spCode = spCode == null ? null : spCode.trim();
+	}
 
-    public String getBranch() {
-        return branch;
-    }
+	public Date getActDate() {
+		return actDate;
+	}
 
-    public void setBranch(String branch) {
-        this.branch = branch == null ? null : branch.trim();
-    }
+	public void setActDate(Date actDate) {
+		this.actDate = actDate;
+	}
 
-    public String getRegion() {
-        return region;
-    }
+	public Long getState() {
+		return state;
+	}
 
-    public void setRegion(String region) {
-        this.region = region == null ? null : region.trim();
-    }
+	public void setState(Long state) {
+		this.state = state;
+	}
 
-    public String getCentre() {
-        return centre;
-    }
+	public String getBranch() {
+		return branch;
+	}
 
-    public void setCentre(String centre) {
-        this.centre = centre == null ? null : centre.trim();
-    }
+	public void setBranch(String branch) {
+		this.branch = branch == null ? null : branch.trim();
+	}
 
-    public BigDecimal getAddressId() {
-        return addressId;
-    }
+	public String getRegion() {
+		return region;
+	}
 
-    public void setAddressId(BigDecimal addressId) {
-        this.addressId = addressId;
-    }
+	public void setRegion(String region) {
+		this.region = region == null ? null : region.trim();
+	}
 
-    public String getAddressIdStr() {
-        return addressId.toString();
-    }
-    
-    public Long getChinaMobile() {
-        return chinaMobile;
-    }
+	public String getCentre() {
+		return centre;
+	}
 
-    public void setChinaMobile(Long chinaMobile) {
-        this.chinaMobile = chinaMobile;
-    }
+	public void setCentre(String centre) {
+		this.centre = centre == null ? null : centre.trim();
+	}
 
-    public Long getChinaUnion() {
-        return chinaUnion;
-    }
+	public BigDecimal getAddressId() {
+		return addressId;
+	}
 
-    public void setChinaUnion(Long chinaUnion) {
-        this.chinaUnion = chinaUnion;
-    }
+	public void setAddressId(BigDecimal addressId) {
+		this.addressId = addressId;
+	}
+
+	public Long getChinaMobile() {
+		return chinaMobile;
+	}
+
+	public void setChinaMobile(Long chinaMobile) {
+		this.chinaMobile = chinaMobile;
+	}
+
+	public Long getChinaUnion() {
+		return chinaUnion;
+	}
+
+	public void setChinaUnion(Long chinaUnion) {
+		this.chinaUnion = chinaUnion;
+	}
+
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName == null ? null : custName.trim();
+	}
+
+	public BigDecimal getId5() {
+		return id5;
+	}
+
+	public void setId5(BigDecimal id5) {
+		this.id5 = id5;
+	}
+
+	public String getStAddr() {
+		return stAddr;
+	}
+
+	public void setStAddr(String stAddr) {
+		this.stAddr = stAddr == null ? null : stAddr.trim();
+	}
+
+	public Long getIfPhone() {
+		return ifPhone;
+	}
+
+	public void setIfPhone(Long ifPhone) {
+		this.ifPhone = ifPhone;
+	}
+
+	public String getAddressIdStr() {
+		return addressId.toString();
+	}
+
+	public String getFormatActDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if (actDate != null) {
+			return sdf.format(actDate);
+		} else {
+			return null;
+		}
+	}
 }

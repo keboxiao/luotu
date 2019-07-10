@@ -117,13 +117,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.FileTopic" useGeneratedKeys="true" keyProperty="topic_id">
+  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.FileTopic" >
+   <selectKey resultType="java.lang.String" keyProperty="topicId" order="BEFORE">
+   SELECT sys_guid() FROM DUAL
+  </selectKey>
     insert into FILE_TOPIC (TOPIC_ID, USER_ID, TITLE, 
       REMARK, ADD_TIME)
     values (#{topicId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.FileTopic" useGeneratedKeys="true" keyProperty="topic_id">
+  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.FileTopic">
+   <selectKey resultType="java.lang.String" keyProperty="topicId" order="BEFORE">
+   SELECT sys_guid() FROM DUAL
+  </selectKey>
     insert into FILE_TOPIC
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="topicId != null">

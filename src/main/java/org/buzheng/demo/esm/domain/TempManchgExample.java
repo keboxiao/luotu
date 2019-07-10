@@ -1165,6 +1165,266 @@ public class TempManchgExample {
             addCriterion("CHINA_UNION not between", value1, value2, "chinaUnion");
             return (Criteria) this;
         }
+
+        public Criteria andCustNameIsNull() {
+            addCriterion("CUST_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameIsNotNull() {
+            addCriterion("CUST_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameEqualTo(String value) {
+            addCriterion("CUST_NAME =", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameNotEqualTo(String value) {
+            addCriterion("CUST_NAME <>", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameGreaterThan(String value) {
+            addCriterion("CUST_NAME >", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameGreaterThanOrEqualTo(String value) {
+            addCriterion("CUST_NAME >=", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameLessThan(String value) {
+            addCriterion("CUST_NAME <", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameLessThanOrEqualTo(String value) {
+            addCriterion("CUST_NAME <=", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameLike(String value) {
+            addCriterion("CUST_NAME like", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameNotLike(String value) {
+            addCriterion("CUST_NAME not like", value, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameIn(List<String> values) {
+            addCriterion("CUST_NAME in", values, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameNotIn(List<String> values) {
+            addCriterion("CUST_NAME not in", values, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameBetween(String value1, String value2) {
+            addCriterion("CUST_NAME between", value1, value2, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustNameNotBetween(String value1, String value2) {
+            addCriterion("CUST_NAME not between", value1, value2, "custName");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5IsNull() {
+            addCriterion("ID5 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5IsNotNull() {
+            addCriterion("ID5 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5EqualTo(BigDecimal value) {
+            addCriterion("ID5 =", value, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5NotEqualTo(BigDecimal value) {
+            addCriterion("ID5 <>", value, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5GreaterThan(BigDecimal value) {
+            addCriterion("ID5 >", value, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5GreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("ID5 >=", value, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5LessThan(BigDecimal value) {
+            addCriterion("ID5 <", value, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5LessThanOrEqualTo(BigDecimal value) {
+            addCriterion("ID5 <=", value, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5In(List<BigDecimal> values) {
+            addCriterion("ID5 in", values, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5NotIn(List<BigDecimal> values) {
+            addCriterion("ID5 not in", values, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5Between(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ID5 between", value1, value2, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andId5NotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("ID5 not between", value1, value2, "id5");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrIsNull() {
+            addCriterion("ST_ADDR is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrIsNotNull() {
+            addCriterion("ST_ADDR is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrEqualTo(String value) {
+            addCriterion("ST_ADDR =", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrNotEqualTo(String value) {
+            addCriterion("ST_ADDR <>", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrGreaterThan(String value) {
+            addCriterion("ST_ADDR >", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrGreaterThanOrEqualTo(String value) {
+            addCriterion("ST_ADDR >=", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrLessThan(String value) {
+            addCriterion("ST_ADDR <", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrLessThanOrEqualTo(String value) {
+            addCriterion("ST_ADDR <=", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrLike(String value) {
+            addCriterion("ST_ADDR like", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrNotLike(String value) {
+            addCriterion("ST_ADDR not like", value, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrIn(List<String> values) {
+            addCriterion("ST_ADDR in", values, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrNotIn(List<String> values) {
+            addCriterion("ST_ADDR not in", values, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrBetween(String value1, String value2) {
+            addCriterion("ST_ADDR between", value1, value2, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andStAddrNotBetween(String value1, String value2) {
+            addCriterion("ST_ADDR not between", value1, value2, "stAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneIsNull() {
+            addCriterion("IF_PHONE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneIsNotNull() {
+            addCriterion("IF_PHONE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneEqualTo(Long value) {
+            addCriterion("IF_PHONE =", value, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneNotEqualTo(Long value) {
+            addCriterion("IF_PHONE <>", value, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneGreaterThan(Long value) {
+            addCriterion("IF_PHONE >", value, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneGreaterThanOrEqualTo(Long value) {
+            addCriterion("IF_PHONE >=", value, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneLessThan(Long value) {
+            addCriterion("IF_PHONE <", value, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneLessThanOrEqualTo(Long value) {
+            addCriterion("IF_PHONE <=", value, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneIn(List<Long> values) {
+            addCriterion("IF_PHONE in", values, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneNotIn(List<Long> values) {
+            addCriterion("IF_PHONE not in", values, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneBetween(Long value1, Long value2) {
+            addCriterion("IF_PHONE between", value1, value2, "ifPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andIfPhoneNotBetween(Long value1, Long value2) {
+            addCriterion("IF_PHONE not between", value1, value2, "ifPhone");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

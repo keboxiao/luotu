@@ -50,7 +50,7 @@ $(function() {
 			width : 100,
 			align : 'center'
 		} , {
-			field : 'address',
+			field : 'stAddr',
 			title : '地址名称',
 			width : 350,
 			align : 'center'
@@ -75,13 +75,13 @@ $(function() {
 			width : 80,
 			align : 'center'
 		}, {
-			field : 'chinaMobile',
-			title : '移动网络情况',
+			field : 'custName',
+			title : '客户',
 			width : 80,
 			align : 'center'
 		}, {
-			field : 'chinaUnion',
-			title : '联通网络情况',
+			field : 'formatActDate',
+			title : '处理日期',
 			width : 80,
 			align : 'center'
 		}, {
@@ -161,6 +161,7 @@ function collectDetails(){
 				id:rows[i].id,
 				accessCode:rows[i].accessCode,
 				address: rows[i].address,
+				custName: rows[i].custName,
 				state: rows[i].state
 			});
 	}
@@ -210,6 +211,8 @@ function clearFun() {
 	$('#grid').datagrid('unselectAll');
 	$('#gridLuotu').datagrid('loadData', {total:0,rows:[]});
 	$('#accessCode').textbox('setValue', '');
+	$('#custName').textbox('setValue', '');
+	$('#stAddr').textbox('setValue', '');
 	$('#begintime').datebox('setValue','');
 	$('#endtime').datebox('setValue','');
 	var state = document.getElementById("state");
@@ -366,6 +369,10 @@ function toDownLoadExcel(){
 			<form id="admin_yhgl_searchForm">
 				接入号：
 				<input id="accessCode" class="easyui-textbox" name="accessCode" />
+				地址：
+				<input id="stAddr" class="easyui-textbox" name="stAddr" />
+				客户：
+				<input id="custName" class="easyui-textbox" name="custName" />
 				起始日期：<input id="begintime" class="easyui-datebox" name="begintime" />
 				终止日期：<input id="endtime" class="easyui-datebox" name="endtime" />
 				状态：
@@ -406,8 +413,9 @@ function toDownLoadExcel(){
         <thead>
             <tr>
              <th data-options="field:'id',width:180">id</th>
-                <th data-options="field:'accessCode',width:180">接入号</th>
+                <th data-options="field:'accessCode',width:150">接入号</th>
                 <th data-options="field:'address',width:300">资源地址</th>
+                 <th data-options="field:'custName',width:80">客户</th>
                 <th data-options="field:'state',width:100">状态</th>
             </tr>
         </thead>

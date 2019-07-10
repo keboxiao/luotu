@@ -62,6 +62,8 @@ public class TempManchgServiceImpl implements TempManchgService {
 		if (StringUtils.isNotBlank((String) params.get("manAccount"))) {
 			criteria.andManAccountEqualTo((String) params.get("manAccount"));
 		}
+		String custName = (String) params.get("custName");
+		String stAddr = (String) params.get("stAddr");
 		String begintime = (String) params.get("begintime");
 		boolean flag = false;
 		if (StringUtils.isNotBlank(begintime)) {
@@ -76,6 +78,12 @@ public class TempManchgServiceImpl implements TempManchgService {
 			}
 			criteria.andActDateLessThanOrEqualTo(strToDate(endtime));
 		}
+		if (StringUtils.isNotBlank(custName)) {
+			criteria.andCustNameEqualTo(custName);
+		}
+		if (StringUtils.isNotBlank(stAddr)) {
+			criteria.andStAddrLike("%" + stAddr + "%");
+		}
 		example.setOrderByClause(" address_id,id");
 		List<TempManchg> list = tempManchgMapper.selectByExample(example);
 		// 取分页信息
@@ -85,19 +93,20 @@ public class TempManchgServiceImpl implements TempManchgService {
 		datagrid.setTotal(pageInfo.getTotal());
 		return datagrid;
 	}
+
 	/**
-	   * 将短时间格式字符串转换为时间 yyyy-MM-dd 
-	   * 
-	   * @param strDate
-	   * @return
-	   */
+	 * 将短时间格式字符串转换为时间 yyyy-MM-dd
+	 * 
+	 * @param strDate
+	 * @return
+	 */
 	public static Date strToDate(String strDate) {
-	   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	   ParsePosition pos = new ParsePosition(0);
-	   Date strtodate = formatter.parse(strDate, pos);
-	   return strtodate;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		ParsePosition pos = new ParsePosition(0);
+		Date strtodate = formatter.parse(strDate, pos);
+		return strtodate;
 	}
-	
+
 	public void searchAndDownload(Map<String, Object> params, HttpServletResponse response) {
 		TempManchgExample example = new TempManchgExample();
 		TempManchgExample.Criteria criteria = example.createCriteria();

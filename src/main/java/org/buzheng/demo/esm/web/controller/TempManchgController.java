@@ -32,9 +32,12 @@ public class TempManchgController {
 		String begintime = request.getParameter("begintime");
 		String endtime = request.getParameter("endtime");
 		String state = request.getParameter("state");
+		String custName = request.getParameter("custName");
+		String stAddr = request.getParameter("stAddr");
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("accessCode", accessCode);
-
+		params.put("custName", custName);
+		params.put("stAddr", stAddr);
 		if (StringUtils.isNotBlank(begintime)) {
 			params.put("begintime", request.getParameter("begintime"));
 		}

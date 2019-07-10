@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.buzheng.demo.esm.App;
 import org.buzheng.demo.esm.domain.DataGrid;
+import org.buzheng.demo.esm.domain.SysUser;
 import org.buzheng.demo.esm.service.TObdService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,10 @@ public class TObdController {
 		}
 		if (StringUtils.isNotBlank(state)) {
 			params.put("state", state);
+		}
+		SysUser user = (SysUser) session.getAttribute(App.USER_SESSION_KEY);
+		if(!user.getRoleId().equals("root")){
+			params.put("manAcc", user.getUsername());
 		}
 		return tObdService.findPage(params, page, rows);
 	}

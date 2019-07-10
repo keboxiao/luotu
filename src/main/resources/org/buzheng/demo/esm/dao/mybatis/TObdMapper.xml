@@ -99,6 +99,21 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+  <select id="innerJoinManagerChg" parameterType="map" resultMap="BaseResultMap">
+    select a.* 
+    from T_OBD a inner join MANAGER_CHG b 
+    on a.obd_code = b.type_nei 
+   <where> 
+    <if test="params.manAcc != null">
+         b.MAN_ACCOUNT = #{params.manAcc}
+    </if> 
+    <if test="params.state != null">
+        AND a.state =  #{params.state}
+    </if>
+    order by a.BELONGS_OTB,a.OBD_CODE
+  </where>
+  </select>
   <delete id="deleteByExample" parameterType="org.buzheng.demo.esm.domain.TObdExample">
     delete from T_OBD
     <if test="_parameter != null">

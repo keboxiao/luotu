@@ -270,8 +270,6 @@ function details() {
 			<form id="admin_yhgl_searchForm">
 				obd编码：
 				<input id="obdCode" class="easyui-textbox" name="obdCode" />
-				起始日期：<input id="begintime" class="easyui-datebox" name="begintime" />
-				终止日期：<input id="endtime" class="easyui-datebox" name="endtime" />
 				状态：
 				<select id="state" name="state">
 					<option value="all">
@@ -287,14 +285,12 @@ function details() {
 						归档
 					</option>
 				</select>
-				<a href="javascript:void(0);" id="edit"
-					class="easyui-linkbutton" iconCls="icon-edit" onclick="details()">详情</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'" onclick="searchFun();">查询</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-redo'" onclick="clearFun();">重置</a>
 				<a href="javascript:void(0);" id="edit"
-					class="easyui-linkbutton" iconCls="icon-add" onclick="">导出excel</a>
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="">处理完毕</a>
 			</form>
 		</div>
 		<div>
