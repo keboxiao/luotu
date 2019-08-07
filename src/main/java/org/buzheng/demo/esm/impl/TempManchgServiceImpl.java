@@ -108,26 +108,7 @@ public class TempManchgServiceImpl implements TempManchgService {
 	}
 
 	public void searchAndDownload(Map<String, Object> params, HttpServletResponse response) {
-		TempManchgExample example = new TempManchgExample();
-		TempManchgExample.Criteria criteria = example.createCriteria();
-		/*
-		 * if (params.containsKey("obdCode")) {
-		 * criteria.andObdCodeEqualTo((String) params.get("obdCode")); } if
-		 * (params.containsKey("begintime")) { String begintime = (String)
-		 * params.get("begintime") + " 00:00:00";
-		 * criteria.andFinishTimeGreaterThanOrEqualTo(new Date(begintime)); } if
-		 * (params.containsKey("endtime")) { String endtime = (String)
-		 * params.get("endtime") + " 00:00:00";
-		 * criteria.andFinishTimeLessThanOrEqualTo(new Date(endtime)); }
-		 */
-		String accessCode = (String) params.get("accessCode");
-		if (StringUtils.isNotBlank(accessCode)) {
-			criteria.andAccessCodeEqualTo(accessCode);
-		}
-		if (StringUtils.isNotBlank((String) params.get("state"))) {
-			criteria.andStateEqualTo(Long.parseLong((String) params.get("state")));
-		}
-		List<TempManchg> list = tempManchgMapper.selectByExample(example);
+		List<TempManchg> list = tempManchgMapper.innerJoinSevenLevelAddress(params);
 		downloadExcel(response, list);
 	}
 
@@ -180,9 +161,9 @@ public class TempManchgServiceImpl implements TempManchgService {
 
 				sheet.addCell(new jxl.write.Label(0, i, String.valueOf(i)));// 序号从1开始
 				sheet.addCell(new jxl.write.Label(1, i, list.get(i - 1).getAccessCode()));
-				sheet.addCell(new jxl.write.Label(2, i, list.get(i - 1).getAddressId().toString()));
-				sheet.addCell(new jxl.write.Label(3, i, list.get(i - 1).getAddress()));
-				sheet.addCell(new jxl.write.Label(4, i, list.get(i - 1).getAddress7()));
+				sheet.addCell(new jxl.write.Label(2, i, list.get(i - 1).getId5().toString()));
+				sheet.addCell(new jxl.write.Label(3, i, list.get(i - 1).getStAddr()));
+				sheet.addCell(new jxl.write.Label(4, i, list.get(i - 1).getSevenLevelAddress().getFullName()));
 
 				// 设置日期格式
 				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");

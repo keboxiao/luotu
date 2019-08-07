@@ -127,135 +127,38 @@ function clearFun() {
 	$('#grid').datagrid('load', {});
 }
 
-function editBatchById(row) {
-	if (row) {
-		$("#dlgDetails").dialog("open").dialog('setTitle', '修改');
-		$("#batchForm").form("load", row);
-		$("#batch_no").attr('value',row.id);
-		$('#filegrid').datagrid( {
-			url : '../../app/listFileByBatchId?id='+id,
-			striped : true,
-			rownumbers : true,
-			singleSelect:true,
-			fitColumns: false,
-			columns : [ [ {
-				field : 'filename',
-				title : '文件名',
-				width : 300,
-				align : 'center'
-			}, {
-				field : 'batchNo',
-				title : '主题号',
-				width : 80,
-				align : 'center'
-			}, {
-				field : 'uploadTime',
-				title : '上传时间',
-				width : 200,
-				align : 'center'
-			}, {
-				field:'no',
-				title:'下载',
-				align:'center',
-				width : 100,
-				formatter : function(value) {
-					return "<a href='../../app/downloadById?id=" + value + "'>下载</a>";
+function handleTask() {
+	//alert("luotu");
+	var rows = $('#grid').datagrid('getSelections');
+	var ids = [];
+	if (rows.length > 0) {
+		$.messager.confirm('确认', '您是否要保存？', function(r) {
+			if (r) {
+				for ( var i = 0; i < rows.length; i++) {
+					ids.push(rows[i].obdCode);
 				}
-			} ] ]
+				$.ajax({
+					type: 'POST',
+					url : '${pageContext.request.contextPath}/app/handleTask',
+					data : {
+						obdCodes : ids.join(',')
+					},
+					dataType : 'json',
+					success : function(r) {
+						$('#grid').datagrid('reload');
+						$('#grid').datagrid('unselectAll');
+						$.messager.show({
+							title : '提示',
+							msg : r.msg
+						});
+					}
+				});
+			}
 		});
-	}
-}
-
-function details() {
-	var rowsData = $('#grid').datagrid('getSelections');
-	if (!rowsData || rowsData.length==0) {
-		tip('请选择一行数据');
-		return;
-	}		
-	if (rowsData.length>1) {
-		tip('请选择一行数据');
-		return;
-	}	
-	var row = rowsData[0];
-	if (row) {
-		$("#dlgDetails").dialog("open").dialog('setTitle', '详情');
-		$("#orderForm").form("load", row);
-		$("#batch_no").attr('value',row.id);
-		$('#workOrderDetails').datagrid( {
-			url : '../../app/listOrderDetails?workOrderId='+row.id,
-			striped : true,
-			rownumbers : true,
-			singleSelect:true,
-			fitColumns: false,
-			columns : [ [ {
-				field : 'sysUser',
-				title : '处理人',
-				width : 90,
-				align : 'center',
-				formatter: function (value) { 
-					return value.name;
-				}
-			}, {
-				field : 'a',
-				title : '处理人电话',
-				width : 110,
-				align : 'center',
-				formatter: function (value,row,index) { 
-					return row.sysUser.phone;
-				}
-			}, {
-				field : 'formatReachTime',
-				title : '到达时间',
-				width : 150,
-				align : 'center'
-			}, {
-				field : 'formatFinishTime',
-				title : '完成时间',
-				width : 150,
-				align : 'center'
-			}, {
-				field:'remark',
-				title:'处理意见',
-				align:'center',
-				width : 200
-			}, {
-				field:'state',
-				title:'状态',
-				align:'center',
-				width : 70
-			} ] ]
-		});
-		$("#batch_no").attr('value',row.id);
-		$('#filegrid').datagrid( {
-			url : '../../app/listFileByBatchId?id='+row.id+'&file_class=2',
-			striped : true,
-			rownumbers : true,
-			singleSelect:true,
-			fitColumns: false,
-			columns : [ [ {
-				field : 'filename',
-				title : '文件名',
-				width : 300,
-				align : 'center'
-			}, {
-				field : 'batchNo',
-				title : '主题号',
-				width : 80,
-				align : 'center'
-			}, {
-				field : 'uploadTime',
-				title : '上传时间',
-				width : 200,
-				align : 'center'
-			}, {
-				field:'no',
-				title:'下载',
-				align:'center',
-				width : 100,
-				formatter : function(value) {
-					return "<a href='../../app/downloadById?id=" + value + "'>下载</a>";
-				}
-			} ] ]
+	} else {
+		$.messager.show({
+			title : '提示',
+			msg : '请选择OBD！'
 		});
 	}
 }
@@ -272,7 +175,7 @@ function details() {
 				<input id="obdCode" class="easyui-textbox" name="obdCode" />
 				状态：
 				<select id="state" name="state">
-					<option value="all">
+					<option value="">
 						请选择
 					</option>
 					<option value="1">
@@ -290,7 +193,7 @@ function details() {
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-redo'" onclick="clearFun();">重置</a>
 				<a href="javascript:void(0);" id="edit"
-					class="easyui-linkbutton" iconCls="icon-edit" onclick="">处理完毕</a>
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="handleTask();">处理完毕</a>
 			</form>
 		</div>
 		<div>

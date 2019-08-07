@@ -1,6 +1,8 @@
 package org.buzheng.demo.esm.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.buzheng.demo.esm.domain.TempManchg;
 import org.buzheng.demo.esm.domain.TempManchgExample;
@@ -17,6 +19,8 @@ public interface TempManchgMapper {
     int insertSelective(TempManchg record);
 
     List<TempManchg> selectByExample(TempManchgExample example);
+    
+    List<TempManchg> innerJoinSevenLevelAddress(Map<String, Object> params);
 
     TempManchg selectByPrimaryKey(String id);
 

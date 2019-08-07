@@ -46,6 +46,8 @@ public class TempManchg {
 	private String stAddr;
 
 	private Long ifPhone;
+	
+	private SevenLevelAddress sevenLevelAddress;
 
 	public String getId() {
 		return id;
@@ -209,6 +211,14 @@ public class TempManchg {
 
 	public String getAddressIdStr() {
 		return addressId.toString();
+	}
+
+	public SevenLevelAddress getSevenLevelAddress() {
+		return sevenLevelAddress;
+	}
+
+	public void setSevenLevelAddress(SevenLevelAddress sevenLevelAddress) {
+		this.sevenLevelAddress = sevenLevelAddress;
 	}
 
 	public String getFormatActDate() {

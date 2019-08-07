@@ -23,6 +23,22 @@
     <result column="ST_ADDR" jdbcType="VARCHAR" property="stAddr" />
     <result column="IF_PHONE" jdbcType="DECIMAL" property="ifPhone" />
   </resultMap>
+  
+  <resultMap id="InnerJoinSevenLevelAddressResultMap" type="org.buzheng.demo.esm.domain.TempManchg">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="ACCESS_CODE" jdbcType="VARCHAR" property="accessCode" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="MAN_ACCOUNT" jdbcType="VARCHAR" property="manAccount" />
+    <result column="ADDRESS_7" jdbcType="VARCHAR" property="address7" />
+    <result column="ACT_DATE" jdbcType="TIMESTAMP" property="actDate" />
+    <result column="REGION" jdbcType="VARCHAR" property="region" />
+    <result column="ID5" jdbcType="DECIMAL" property="id5" />
+    <result column="ST_ADDR" jdbcType="VARCHAR" property="stAddr" />
+    <association property="sevenLevelAddress" javaType="org.buzheng.demo.esm.domain.SevenLevelAddress">
+		<result column="FULL_NAME" jdbcType="VARCHAR" property="fullName" />
+	</association>
+  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -99,6 +115,31 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+  </select>
+  
+   <select id="innerJoinSevenLevelAddress" parameterType="java.util.Map" resultMap="InnerJoinSevenLevelAddressResultMap">
+   select a.id,
+       a.access_code,
+       a.address,
+       a.id5,
+       a.st_addr,
+       a.man_account,
+       a.act_date,
+       b.full_name
+  from temp_manchg a
+ inner join seven_level_address b
+    on a.address_7 = b.addr_id
+    <where> 
+    <if test="state != null">
+         a.state = #{state}
+    </if> 
+    <if test="begintime != null">
+        AND a.act_date &gt;= #{begintime}
+    </if>
+     <if test="endtime != null">
+        AND a.act_date &lt;= #{endtime}
+    </if>
+  </where>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

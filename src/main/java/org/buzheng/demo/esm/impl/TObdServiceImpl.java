@@ -1,5 +1,6 @@
 package org.buzheng.demo.esm.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -61,4 +62,20 @@ public class TObdServiceImpl implements TObdService {
 		}
 	}
 
+	public int handleTask(String obdCodes, String manAcc) {
+		TObdExample example = new TObdExample();
+		TObdExample.Criteria criteria = example.createCriteria();
+		String[] idArr = obdCodes.split(",");
+		List<String> idList = new ArrayList<>();
+		for (int i = 0; i < idArr.length; i++) {
+			idList.add(idArr[i]);
+		}
+		criteria.andObdCodeIn(idList);
+		TObd obd = new TObd();
+		obd.setFinishTime(new Date());
+		obd.setState((long) 2);
+		obd.setUpdateManId(manAcc);
+		tObdMapper.updateByExampleSelective(obd, example);
+		return 1;
+	}
 }

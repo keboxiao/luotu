@@ -8,4 +8,6 @@ public interface TObdService {
 
 	public DataGrid findPage(Map<String, Object> params, int page, int rows);
 
+	public int handleTask(String obdCodes, String manAcc);
+
 }
