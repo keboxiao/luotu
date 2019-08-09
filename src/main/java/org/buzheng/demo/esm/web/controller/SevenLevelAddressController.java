@@ -32,7 +32,7 @@ public class SevenLevelAddressController {
 		new Thread() {
             public void run() {
                 // 写自己的业务逻辑
-            	sevenLevelAddressService.getAddressDataFromAMap();
+            	sevenLevelAddressService.getAddressDataBatchFromAMap();
             }
         }.start();
 

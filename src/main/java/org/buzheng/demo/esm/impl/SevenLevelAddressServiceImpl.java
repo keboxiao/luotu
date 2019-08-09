@@ -114,9 +114,9 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 		List<SevenLevelAddress> list = sevenLevelAddressMapper.selectByExample(example);
 		getAddressTask.setTotal(list.size());
 		getAddressTaskMapper.insertSelective(getAddressTask);
-		//getAddressTask.setTaskId(taskId);
+		// getAddressTask.setTaskId(taskId);
 		int c = 0;
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.size();) {
 			int j;
 			String lonlatList = "";
 			for (j = 0; j < 20 && i + j < list.size(); j++) {
@@ -158,9 +158,10 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 						c++;
 					}
 				} else {
-					logger.info("请求错误！");
+					logger.info("request error!requestJson=" + lonlatList);
 				}
 			}
+			i += j;
 		}
 		// getAddressTask.setTotal(list.size());
 		getAddressTask.setAchieve(c);
