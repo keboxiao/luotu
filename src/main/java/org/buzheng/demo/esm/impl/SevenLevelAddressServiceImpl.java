@@ -106,6 +106,7 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 
 	public int getAddressDataBatchFromAMap() {
 		GetAddressTask getAddressTask = new GetAddressTask();
+		getAddressTask.setTaskType("地址获取");
 		getAddressTask.setBeginTime(new Date());
 		getAddressTask.setState(1);
 		SevenLevelAddressExample example = new SevenLevelAddressExample();
@@ -126,6 +127,8 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 				String tmp = "" + latlon[1] + "," + latlon[0];
 				lonlatList += tmp;
 				lonlatList += "|";
+				list.get(i + j).setAmapLon(new BigDecimal(latlon[1]));
+				list.get(i + j).setAmapLat(new BigDecimal(latlon[0]));
 			}
 			lonlatList = lonlatList.substring(0, lonlatList.length() - 1);
 			String res = GaoDeMapUtil.getAddressJsonByLngAndLatBatch(lonlatList);

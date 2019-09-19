@@ -16,6 +16,8 @@ public class GetAddressTask {
 
     private Integer state;
 
+    private String taskType;
+
     public String getTaskId() {
         return taskId;
     }
@@ -43,12 +45,7 @@ public class GetAddressTask {
     public Date getBeginTime() {
         return beginTime;
     }
-    
-    public String getFormatBeginTime() {
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(beginTime);
-    }
-    
+
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
@@ -57,11 +54,6 @@ public class GetAddressTask {
         return endTime;
     }
 
-    public String getFormatEndTime() {
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(endTime);
-    }
-   
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
@@ -72,5 +64,23 @@ public class GetAddressTask {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType == null ? null : taskType.trim();
+    }
+    
+    public String getFormatBeginTime() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(beginTime);
+    }
+
+    public String getFormatEndTime() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(endTime);
     }
 }

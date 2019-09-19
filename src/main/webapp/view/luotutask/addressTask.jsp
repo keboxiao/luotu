@@ -32,33 +32,38 @@ $(function() {
 		columns : [ [ {
 			field : 'taskId',
 			title : 'id',
-			width : 150,
+			width : 260,
 			align : 'center'
 		}, {
 			field : 'total',
-			title : '总任务数',
+			title : '总记录数',
 			width : 80,
 			align : 'center'
 		}, {
 			field: 'achieve', 
 			title: '完成数', 
 			align: 'center', 
-			width : 100,
+			width : 80,
 			align : 'center'
 		}, {
 			field : 'formatBeginTime',
 			title : '任务开始时间',
-			width : 200,
+			width : 180,
 			align : 'center'
 		} , {
 			field : 'formatEndTime',
 			title : '任务结束时间',
-			width : 100,
+			width : 180,
+			align : 'center'
+		}, {
+			field : 'taskType',
+			title : '任务类型',
+			width : 180,
 			align : 'center'
 		}, {
 			field : 'state',
 			title : '状态',
-			width : 120,
+			width : 80,
 			align : 'center'
 		}] ]
 	});
@@ -106,6 +111,25 @@ function newTask() {
 	});
 }
 
+function newCQTTask() {
+	$.messager.confirm('确认', '您确定要新建CQT任务吗？', function(r) {
+	if (r) {
+	$.ajax( {
+		type : 'POST',
+		url : '../../app/translateLonLat',
+		data : $('#batchForm').serialize(),
+		dataType : 'json',
+		success : function(r) {
+			$.messager.show( {
+				title : '提示',
+				msg : r.msg
+			});
+			$("#grid").datagrid("load");
+		}
+	});
+	}
+	});
+}
 
 </script>
 
@@ -132,18 +156,18 @@ function newTask() {
 					</option>
 				</select>
 				<a href="javascript:void(0);" id="edit"
-					class="easyui-linkbutton" iconCls="icon-edit" onclick="newTask()">新建任务</a>
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="newTask()">新建地址任务</a>
+				<a href="javascript:void(0);" id="edit"
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="newCQTTask()">CQT经纬度转换</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'" onclick="searchFun();">查询</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-redo'" onclick="clearFun();">重置</a>
-				<a href="javascript:void(0);" id="edit"
-					class="easyui-linkbutton" iconCls="icon-add" onclick="">导出excel</a>
 			</form>
 		</div>
 		<div>
 			<table id="grid" toolbar="#tb" title="获取地址任务" iconCls="icon-search"
-				data-options="singleSelect:true,rownumbers:true,pagination:true,striped:true,fitColumns:true"></table>
+				data-options="singleSelect:true,rownumbers:true,pagination:true,striped:true"></table>
 		</div>
 	</body>
 

@@ -8,6 +8,7 @@
     <result column="BEGIN_TIME" jdbcType="TIMESTAMP" property="beginTime" />
     <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
     <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="TASK_TYPE" jdbcType="VARCHAR" property="taskType" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    TASK_ID, TOTAL, ACHIEVE, BEGIN_TIME, END_TIME, STATE
+    TASK_ID, TOTAL, ACHIEVE, BEGIN_TIME, END_TIME, STATE, TASK_TYPE
   </sql>
   <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.GetAddressTaskExample" resultMap="BaseResultMap">
     select
@@ -101,20 +102,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="org.buzheng.demo.esm.domain.GetAddressTask">
-    <selectKey resultType="java.lang.String" keyProperty="taskId" order="BEFORE">
-   SELECT sys_guid() FROM DUAL
-  </selectKey>
     insert into GET_ADDRESS_TASK (TASK_ID, TOTAL, ACHIEVE, 
-      BEGIN_TIME, END_TIME, STATE
-      )
+      BEGIN_TIME, END_TIME, STATE, 
+      TASK_TYPE)
     values (#{taskId,jdbcType=VARCHAR}, #{total,jdbcType=DECIMAL}, #{achieve,jdbcType=DECIMAL}, 
-      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{state,jdbcType=DECIMAL}
-      )
+      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{state,jdbcType=DECIMAL}, 
+      #{taskType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.GetAddressTask">
-  <selectKey resultType="java.lang.String" keyProperty="taskId" order="BEFORE">
-   SELECT sys_guid() FROM DUAL
-  </selectKey>
     insert into GET_ADDRESS_TASK
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="taskId != null">
@@ -135,6 +130,9 @@
       <if test="state != null">
         STATE,
       </if>
+      <if test="taskType != null">
+        TASK_TYPE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="taskId != null">
@@ -154,6 +152,9 @@
       </if>
       <if test="state != null">
         #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="taskType != null">
+        #{taskType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -184,6 +185,9 @@
       <if test="record.state != null">
         STATE = #{record.state,jdbcType=DECIMAL},
       </if>
+      <if test="record.taskType != null">
+        TASK_TYPE = #{record.taskType,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -196,7 +200,8 @@
       ACHIEVE = #{record.achieve,jdbcType=DECIMAL},
       BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
       END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
-      STATE = #{record.state,jdbcType=DECIMAL}
+      STATE = #{record.state,jdbcType=DECIMAL},
+      TASK_TYPE = #{record.taskType,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -219,6 +224,9 @@
       <if test="state != null">
         STATE = #{state,jdbcType=DECIMAL},
       </if>
+      <if test="taskType != null">
+        TASK_TYPE = #{taskType,jdbcType=VARCHAR},
+      </if>
     </set>
     where TASK_ID = #{taskId,jdbcType=VARCHAR}
   </update>
@@ -228,7 +236,8 @@
       ACHIEVE = #{achieve,jdbcType=DECIMAL},
       BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
       END_TIME = #{endTime,jdbcType=TIMESTAMP},
-      STATE = #{state,jdbcType=DECIMAL}
+      STATE = #{state,jdbcType=DECIMAL},
+      TASK_TYPE = #{taskType,jdbcType=VARCHAR}
     where TASK_ID = #{taskId,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -474,6 +474,76 @@ public class GetAddressTaskExample {
             addCriterion("STATE not between", value1, value2, "state");
             return (Criteria) this;
         }
+
+        public Criteria andTaskTypeIsNull() {
+            addCriterion("TASK_TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeIsNotNull() {
+            addCriterion("TASK_TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeEqualTo(String value) {
+            addCriterion("TASK_TYPE =", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeNotEqualTo(String value) {
+            addCriterion("TASK_TYPE <>", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeGreaterThan(String value) {
+            addCriterion("TASK_TYPE >", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("TASK_TYPE >=", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeLessThan(String value) {
+            addCriterion("TASK_TYPE <", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeLessThanOrEqualTo(String value) {
+            addCriterion("TASK_TYPE <=", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeLike(String value) {
+            addCriterion("TASK_TYPE like", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeNotLike(String value) {
+            addCriterion("TASK_TYPE not like", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeIn(List<String> values) {
+            addCriterion("TASK_TYPE in", values, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeNotIn(List<String> values) {
+            addCriterion("TASK_TYPE not in", values, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeBetween(String value1, String value2) {
+            addCriterion("TASK_TYPE between", value1, value2, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeNotBetween(String value1, String value2) {
+            addCriterion("TASK_TYPE not between", value1, value2, "taskType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

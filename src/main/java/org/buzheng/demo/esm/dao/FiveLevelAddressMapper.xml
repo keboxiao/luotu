@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buzheng.demo.esm.dao.FiveLevelAddressMapper">
+  <resultMap id="BaseResultMap" type="org.buzheng.demo.esm.domain.FiveLevelAddress">
+    <id column="ADDR_ID" jdbcType="VARCHAR" property="addrId" />
+    <result column="LON" jdbcType="DECIMAL" property="lon" />
+    <result column="LAT" jdbcType="DECIMAL" property="lat" />
+    <result column="XMAP_LON" jdbcType="DECIMAL" property="xmapLon" />
+    <result column="XMAP_LAT" jdbcType="DECIMAL" property="xmapLat" />
+    <result column="ADDR_LEVEL1" jdbcType="VARCHAR" property="addrLevel1" />
+    <result column="ADDR_LEVEL2" jdbcType="VARCHAR" property="addrLevel2" />
+    <result column="ADDR_LEVEL3" jdbcType="VARCHAR" property="addrLevel3" />
+    <result column="ADDR_LEVEL4" jdbcType="VARCHAR" property="addrLevel4" />
+    <result column="ADDR_LEVEL5" jdbcType="VARCHAR" property="addrLevel5" />
+    <result column="ADDR_LEVEL4_STD" jdbcType="VARCHAR" property="addrLevel4Std" />
+    <result column="ADDR_LEVEL5_STD" jdbcType="VARCHAR" property="addrLevel5Std" />
+    <result column="FULL_NAME" jdbcType="VARCHAR" property="fullName" />
+    <result column="FULL_NAME_STD" jdbcType="VARCHAR" property="fullNameStd" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="CHINA_MOBILE" jdbcType="DECIMAL" property="chinaMobile" />
+    <result column="CHINA_UNION" jdbcType="DECIMAL" property="chinaUnion" />
+    <result column="MAN_ACCOUNT" jdbcType="VARCHAR" property="manAccount" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ID5" jdbcType="DECIMAL" property="id5" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ADDR_ID, LON, LAT, XMAP_LON, XMAP_LAT, ADDR_LEVEL1, ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
+    ADDR_LEVEL5, ADDR_LEVEL4_STD, ADDR_LEVEL5_STD, FULL_NAME, FULL_NAME_STD, STATE, CHINA_MOBILE, 
+    CHINA_UNION, MAN_ACCOUNT, UPDATE_TIME, ID5
+  </sql>
+  <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from FIVE_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FIVE_LEVEL_ADDRESS
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from FIVE_LEVEL_ADDRESS
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddressExample">
+    delete from FIVE_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
+    insert into FIVE_LEVEL_ADDRESS (ADDR_ID, LON, LAT, 
+      XMAP_LON, XMAP_LAT, ADDR_LEVEL1, 
+      ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
+      ADDR_LEVEL5, ADDR_LEVEL4_STD, ADDR_LEVEL5_STD, 
+      FULL_NAME, FULL_NAME_STD, STATE, 
+      CHINA_MOBILE, CHINA_UNION, MAN_ACCOUNT, 
+      UPDATE_TIME, ID5)
+    values (#{addrId,jdbcType=VARCHAR}, #{lon,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, 
+      #{xmapLon,jdbcType=DECIMAL}, #{xmapLat,jdbcType=DECIMAL}, #{addrLevel1,jdbcType=VARCHAR}, 
+      #{addrLevel2,jdbcType=VARCHAR}, #{addrLevel3,jdbcType=VARCHAR}, #{addrLevel4,jdbcType=VARCHAR}, 
+      #{addrLevel5,jdbcType=VARCHAR}, #{addrLevel4Std,jdbcType=VARCHAR}, #{addrLevel5Std,jdbcType=VARCHAR}, 
+      #{fullName,jdbcType=VARCHAR}, #{fullNameStd,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}, 
+      #{chinaMobile,jdbcType=DECIMAL}, #{chinaUnion,jdbcType=DECIMAL}, #{manAccount,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{id5,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
+    insert into FIVE_LEVEL_ADDRESS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="addrId != null">
+        ADDR_ID,
+      </if>
+      <if test="lon != null">
+        LON,
+      </if>
+      <if test="lat != null">
+        LAT,
+      </if>
+      <if test="xmapLon != null">
+        XMAP_LON,
+      </if>
+      <if test="xmapLat != null">
+        XMAP_LAT,
+      </if>
+      <if test="addrLevel1 != null">
+        ADDR_LEVEL1,
+      </if>
+      <if test="addrLevel2 != null">
+        ADDR_LEVEL2,
+      </if>
+      <if test="addrLevel3 != null">
+        ADDR_LEVEL3,
+      </if>
+      <if test="addrLevel4 != null">
+        ADDR_LEVEL4,
+      </if>
+      <if test="addrLevel5 != null">
+        ADDR_LEVEL5,
+      </if>
+      <if test="addrLevel4Std != null">
+        ADDR_LEVEL4_STD,
+      </if>
+      <if test="addrLevel5Std != null">
+        ADDR_LEVEL5_STD,
+      </if>
+      <if test="fullName != null">
+        FULL_NAME,
+      </if>
+      <if test="fullNameStd != null">
+        FULL_NAME_STD,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="chinaMobile != null">
+        CHINA_MOBILE,
+      </if>
+      <if test="chinaUnion != null">
+        CHINA_UNION,
+      </if>
+      <if test="manAccount != null">
+        MAN_ACCOUNT,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="id5 != null">
+        ID5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="addrId != null">
+        #{addrId,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        #{lon,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="xmapLon != null">
+        #{xmapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="xmapLat != null">
+        #{xmapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="addrLevel1 != null">
+        #{addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel2 != null">
+        #{addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel3 != null">
+        #{addrLevel3,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel4 != null">
+        #{addrLevel4,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel5 != null">
+        #{addrLevel5,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel4Std != null">
+        #{addrLevel4Std,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel5Std != null">
+        #{addrLevel5Std,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="fullNameStd != null">
+        #{fullNameStd,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="chinaMobile != null">
+        #{chinaMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="chinaUnion != null">
+        #{chinaUnion,jdbcType=DECIMAL},
+      </if>
+      <if test="manAccount != null">
+        #{manAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id5 != null">
+        #{id5,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddressExample" resultType="java.lang.Long">
+    select count(*) from FIVE_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update FIVE_LEVEL_ADDRESS
+    <set>
+      <if test="record.addrId != null">
+        ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lon != null">
+        LON = #{record.lon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lat != null">
+        LAT = #{record.lat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.xmapLon != null">
+        XMAP_LON = #{record.xmapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.xmapLat != null">
+        XMAP_LAT = #{record.xmapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addrLevel1 != null">
+        ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel2 != null">
+        ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel3 != null">
+        ADDR_LEVEL3 = #{record.addrLevel3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel4 != null">
+        ADDR_LEVEL4 = #{record.addrLevel4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel5 != null">
+        ADDR_LEVEL5 = #{record.addrLevel5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel4Std != null">
+        ADDR_LEVEL4_STD = #{record.addrLevel4Std,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel5Std != null">
+        ADDR_LEVEL5_STD = #{record.addrLevel5Std,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullName != null">
+        FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullNameStd != null">
+        FULL_NAME_STD = #{record.fullNameStd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        STATE = #{record.state,jdbcType=DECIMAL},
+      </if>
+      <if test="record.chinaMobile != null">
+        CHINA_MOBILE = #{record.chinaMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="record.chinaUnion != null">
+        CHINA_UNION = #{record.chinaUnion,jdbcType=DECIMAL},
+      </if>
+      <if test="record.manAccount != null">
+        MAN_ACCOUNT = #{record.manAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.id5 != null">
+        ID5 = #{record.id5,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update FIVE_LEVEL_ADDRESS
+    set ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      LON = #{record.lon,jdbcType=DECIMAL},
+      LAT = #{record.lat,jdbcType=DECIMAL},
+      XMAP_LON = #{record.xmapLon,jdbcType=DECIMAL},
+      XMAP_LAT = #{record.xmapLat,jdbcType=DECIMAL},
+      ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      ADDR_LEVEL3 = #{record.addrLevel3,jdbcType=VARCHAR},
+      ADDR_LEVEL4 = #{record.addrLevel4,jdbcType=VARCHAR},
+      ADDR_LEVEL5 = #{record.addrLevel5,jdbcType=VARCHAR},
+      ADDR_LEVEL4_STD = #{record.addrLevel4Std,jdbcType=VARCHAR},
+      ADDR_LEVEL5_STD = #{record.addrLevel5Std,jdbcType=VARCHAR},
+      FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+      FULL_NAME_STD = #{record.fullNameStd,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=DECIMAL},
+      CHINA_MOBILE = #{record.chinaMobile,jdbcType=DECIMAL},
+      CHINA_UNION = #{record.chinaUnion,jdbcType=DECIMAL},
+      MAN_ACCOUNT = #{record.manAccount,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      ID5 = #{record.id5,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
+    update FIVE_LEVEL_ADDRESS
+    <set>
+      <if test="lon != null">
+        LON = #{lon,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null">
+        LAT = #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="xmapLon != null">
+        XMAP_LON = #{xmapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="xmapLat != null">
+        XMAP_LAT = #{xmapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="addrLevel1 != null">
+        ADDR_LEVEL1 = #{addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel2 != null">
+        ADDR_LEVEL2 = #{addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel3 != null">
+        ADDR_LEVEL3 = #{addrLevel3,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel4 != null">
+        ADDR_LEVEL4 = #{addrLevel4,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel5 != null">
+        ADDR_LEVEL5 = #{addrLevel5,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel4Std != null">
+        ADDR_LEVEL4_STD = #{addrLevel4Std,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel5Std != null">
+        ADDR_LEVEL5_STD = #{addrLevel5Std,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="fullNameStd != null">
+        FULL_NAME_STD = #{fullNameStd,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="chinaMobile != null">
+        CHINA_MOBILE = #{chinaMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="chinaUnion != null">
+        CHINA_UNION = #{chinaUnion,jdbcType=DECIMAL},
+      </if>
+      <if test="manAccount != null">
+        MAN_ACCOUNT = #{manAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id5 != null">
+        ID5 = #{id5,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
+    update FIVE_LEVEL_ADDRESS
+    set LON = #{lon,jdbcType=DECIMAL},
+      LAT = #{lat,jdbcType=DECIMAL},
+      XMAP_LON = #{xmapLon,jdbcType=DECIMAL},
+      XMAP_LAT = #{xmapLat,jdbcType=DECIMAL},
+      ADDR_LEVEL1 = #{addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{addrLevel2,jdbcType=VARCHAR},
+      ADDR_LEVEL3 = #{addrLevel3,jdbcType=VARCHAR},
+      ADDR_LEVEL4 = #{addrLevel4,jdbcType=VARCHAR},
+      ADDR_LEVEL5 = #{addrLevel5,jdbcType=VARCHAR},
+      ADDR_LEVEL4_STD = #{addrLevel4Std,jdbcType=VARCHAR},
+      ADDR_LEVEL5_STD = #{addrLevel5Std,jdbcType=VARCHAR},
+      FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      FULL_NAME_STD = #{fullNameStd,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      CHINA_MOBILE = #{chinaMobile,jdbcType=DECIMAL},
+      CHINA_UNION = #{chinaUnion,jdbcType=DECIMAL},
+      MAN_ACCOUNT = #{manAccount,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      ID5 = #{id5,jdbcType=DECIMAL}
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+</mapper>
