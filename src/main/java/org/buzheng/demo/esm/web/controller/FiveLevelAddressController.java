@@ -7,6 +7,8 @@ import org.buzheng.demo.esm.dao.FiveLevelAddressMapper;
 import org.buzheng.demo.esm.domain.DataGrid;
 import org.buzheng.demo.esm.domain.FiveLevelAddressExample;
 import org.buzheng.demo.esm.domain.GetAddressTask;
+import org.buzheng.demo.esm.domain.Json;
+import org.buzheng.demo.esm.service.FiveLevelAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,9 @@ public class FiveLevelAddressController {
 	@Autowired
 	private FiveLevelAddressMapper fiveLevelAddressMapper;
 
+	@Autowired
+	private FiveLevelAddressService fiveLevelAddressService;
+	
 	@RequestMapping("searchFiveLevelAddress")
 	@ResponseBody
 	public DataGrid searchFiveLevelAddress(String addr, int page, int rows) {
@@ -36,5 +41,22 @@ public class FiveLevelAddressController {
 		datagrid.setRows(list);
 		datagrid.setTotal(pageInfo.getTotal());
 		return datagrid;
+	}
+	
+	@RequestMapping("matchFiveLevelAddr")
+	@ResponseBody
+	public Json matchFiveLevelAddr() {
+		new Thread() {
+            public void run() {
+                // 写自己的业务逻辑
+            	fiveLevelAddressService.matchAddress();
+            }
+        }.start();
+
+		Json j = new Json();
+		String msg = "成功添加一个任务";
+		j.setSuccess(true);
+		j.setMsg(msg);
+		return j;
 	}
 }

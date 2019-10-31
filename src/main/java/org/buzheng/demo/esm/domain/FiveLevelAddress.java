@@ -44,6 +44,8 @@ public class FiveLevelAddress {
 
     private BigDecimal id5;
 
+    private String polygonLonlat;
+
     public String getAddrId() {
         return addrId;
     }
@@ -202,5 +204,13 @@ public class FiveLevelAddress {
 
     public void setId5(BigDecimal id5) {
         this.id5 = id5;
+    }
+
+    public String getPolygonLonlat() {
+        return polygonLonlat;
+    }
+
+    public void setPolygonLonlat(String polygonLonlat) {
+        this.polygonLonlat = polygonLonlat == null ? null : polygonLonlat.trim();
     }
 }

@@ -71,7 +71,7 @@ $(function(){
 				border:false,
 				noheader:false
 	});
-	addTab('地图', 'http://59.53.251.177:58080/guangdong-grid-maintain-ttgis/index.html');
+
 });
 </script>
 </head>
@@ -102,8 +102,12 @@ $(function(){
 	<ul id="help_tree" class="easyui-tree"></ul>
 </div>
 <div data-options="region:'center'" style="overflow: hidden; ">
- <div id="tabs" class="easyui-tabs" fit="true" border="false">
-		
+   <div id="tabs" class="easyui-tabs" fit="true" border="false">
+		<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
+			<h1>
+				欢迎您登录系统。
+			</h1>
+		</div>
 	</div>
 </div>
 

@@ -131,6 +131,25 @@ function newCQTTask() {
 	});
 }
 
+function matchFiveLevelAddr() {
+	$.messager.confirm('确认', '您确定要新建地址匹配任务吗？', function(r) {
+	if (r) {
+	$.ajax( {
+		type : 'POST',
+		url : '../../app/matchFiveLevelAddr',
+		data : $('#batchForm').serialize(),
+		dataType : 'json',
+		success : function(r) {
+			$.messager.show( {
+				title : '提示',
+				msg : r.msg
+			});
+			$("#grid").datagrid("load");
+		}
+	});
+	}
+	});
+}
 </script>
 
 	</head>
@@ -159,6 +178,8 @@ function newCQTTask() {
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="newTask()">新建地址任务</a>
 				<a href="javascript:void(0);" id="edit"
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="newCQTTask()">CQT经纬度转换</a>
+				<a href="javascript:void(0);" id="edit"
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="matchFiveLevelAddr()">五级地址匹配</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'" onclick="searchFun();">查询</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"

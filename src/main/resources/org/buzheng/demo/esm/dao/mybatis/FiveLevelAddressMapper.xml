@@ -22,6 +22,7 @@
     <result column="MAN_ACCOUNT" jdbcType="VARCHAR" property="manAccount" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="ID5" jdbcType="DECIMAL" property="id5" />
+    <result column="POLYGON_LONLAT" jdbcType="VARCHAR" property="polygonLonlat" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -84,7 +85,7 @@
   <sql id="Base_Column_List">
     ADDR_ID, LON, LAT, XMAP_LON, XMAP_LAT, ADDR_LEVEL1, ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
     ADDR_LEVEL5, ADDR_LEVEL4_STD, ADDR_LEVEL5_STD, FULL_NAME, FULL_NAME_STD, STATE, CHINA_MOBILE, 
-    CHINA_UNION, MAN_ACCOUNT, UPDATE_TIME, ID5
+    CHINA_UNION, MAN_ACCOUNT, UPDATE_TIME, ID5, POLYGON_LONLAT
   </sql>
   <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddressExample" resultMap="BaseResultMap">
     select
@@ -123,14 +124,16 @@
       ADDR_LEVEL5, ADDR_LEVEL4_STD, ADDR_LEVEL5_STD, 
       FULL_NAME, FULL_NAME_STD, STATE, 
       CHINA_MOBILE, CHINA_UNION, MAN_ACCOUNT, 
-      UPDATE_TIME, ID5)
+      UPDATE_TIME, ID5, POLYGON_LONLAT
+      )
     values (#{addrId,jdbcType=VARCHAR}, #{lon,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, 
       #{xmapLon,jdbcType=DECIMAL}, #{xmapLat,jdbcType=DECIMAL}, #{addrLevel1,jdbcType=VARCHAR}, 
       #{addrLevel2,jdbcType=VARCHAR}, #{addrLevel3,jdbcType=VARCHAR}, #{addrLevel4,jdbcType=VARCHAR}, 
       #{addrLevel5,jdbcType=VARCHAR}, #{addrLevel4Std,jdbcType=VARCHAR}, #{addrLevel5Std,jdbcType=VARCHAR}, 
       #{fullName,jdbcType=VARCHAR}, #{fullNameStd,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}, 
       #{chinaMobile,jdbcType=DECIMAL}, #{chinaUnion,jdbcType=DECIMAL}, #{manAccount,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{id5,jdbcType=DECIMAL})
+      #{updateTime,jdbcType=TIMESTAMP}, #{id5,jdbcType=DECIMAL}, #{polygonLonlat,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
     insert into FIVE_LEVEL_ADDRESS
@@ -195,6 +198,9 @@
       <if test="id5 != null">
         ID5,
       </if>
+      <if test="polygonLonlat != null">
+        POLYGON_LONLAT,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="addrId != null">
@@ -256,6 +262,9 @@
       </if>
       <if test="id5 != null">
         #{id5,jdbcType=DECIMAL},
+      </if>
+      <if test="polygonLonlat != null">
+        #{polygonLonlat,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -328,6 +337,9 @@
       <if test="record.id5 != null">
         ID5 = #{record.id5,jdbcType=DECIMAL},
       </if>
+      <if test="record.polygonLonlat != null">
+        POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -354,7 +366,8 @@
       CHINA_UNION = #{record.chinaUnion,jdbcType=DECIMAL},
       MAN_ACCOUNT = #{record.manAccount,jdbcType=VARCHAR},
       UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
-      ID5 = #{record.id5,jdbcType=DECIMAL}
+      ID5 = #{record.id5,jdbcType=DECIMAL},
+      POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -419,6 +432,9 @@
       <if test="id5 != null">
         ID5 = #{id5,jdbcType=DECIMAL},
       </if>
+      <if test="polygonLonlat != null">
+        POLYGON_LONLAT = #{polygonLonlat,jdbcType=VARCHAR},
+      </if>
     </set>
     where ADDR_ID = #{addrId,jdbcType=VARCHAR}
   </update>
@@ -442,7 +458,8 @@
       CHINA_UNION = #{chinaUnion,jdbcType=DECIMAL},
       MAN_ACCOUNT = #{manAccount,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      ID5 = #{id5,jdbcType=DECIMAL}
+      ID5 = #{id5,jdbcType=DECIMAL},
+      POLYGON_LONLAT = #{polygonLonlat,jdbcType=VARCHAR}
     where ADDR_ID = #{addrId,jdbcType=VARCHAR}
   </update>
 </mapper>
