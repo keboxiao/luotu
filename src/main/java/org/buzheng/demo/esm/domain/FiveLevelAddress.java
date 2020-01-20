@@ -3,6 +3,8 @@ package org.buzheng.demo.esm.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.buzheng.demo.esm.util.GisUtil;
+
 public class FiveLevelAddress {
     private String addrId;
 
@@ -213,4 +215,25 @@ public class FiveLevelAddress {
     public void setPolygonLonlat(String polygonLonlat) {
         this.polygonLonlat = polygonLonlat == null ? null : polygonLonlat.trim();
     }
+    
+	public boolean isInsidePolygon(double pointLon, double pointLat) {
+		String[] Lonlat = polygonLonlat.split(",");
+		double[] lon = new double[Lonlat.length / 2];
+		double[] lat = new double[Lonlat.length / 2];
+		boolean flag = true;
+		int lonidx = 0;
+		int latidx = 0;
+		for (int i = 0; i < Lonlat.length; i++) {
+			if (flag) {
+				lon[lonidx] = Double.parseDouble(Lonlat[i]);
+				lonidx++;
+				flag = false;
+			} else {
+				lat[latidx] = Double.parseDouble(Lonlat[i]);
+				latidx++;
+				flag = true;
+			}
+		}
+		return GisUtil.isInPolygon(pointLon, pointLat, lon, lat);
+	}
 }

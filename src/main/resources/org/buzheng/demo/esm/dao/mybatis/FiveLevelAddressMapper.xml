@@ -22,7 +22,9 @@
     <result column="MAN_ACCOUNT" jdbcType="VARCHAR" property="manAccount" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="ID5" jdbcType="DECIMAL" property="id5" />
-    <result column="POLYGON_LONLAT" jdbcType="VARCHAR" property="polygonLonlat" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.buzheng.demo.esm.domain.FiveLevelAddress">
+    <result column="POLYGON_LONLAT" jdbcType="CLOB" property="polygonLonlat" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -85,8 +87,27 @@
   <sql id="Base_Column_List">
     ADDR_ID, LON, LAT, XMAP_LON, XMAP_LAT, ADDR_LEVEL1, ADDR_LEVEL2, ADDR_LEVEL3, ADDR_LEVEL4, 
     ADDR_LEVEL5, ADDR_LEVEL4_STD, ADDR_LEVEL5_STD, FULL_NAME, FULL_NAME_STD, STATE, CHINA_MOBILE, 
-    CHINA_UNION, MAN_ACCOUNT, UPDATE_TIME, ID5, POLYGON_LONLAT
+    CHINA_UNION, MAN_ACCOUNT, UPDATE_TIME, ID5
   </sql>
+  <sql id="Blob_Column_List">
+    POLYGON_LONLAT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddressExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from FIVE_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddressExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -101,9 +122,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from FIVE_LEVEL_ADDRESS
     where ADDR_ID = #{addrId,jdbcType=VARCHAR}
   </select>
@@ -132,7 +155,7 @@
       #{addrLevel5,jdbcType=VARCHAR}, #{addrLevel4Std,jdbcType=VARCHAR}, #{addrLevel5Std,jdbcType=VARCHAR}, 
       #{fullName,jdbcType=VARCHAR}, #{fullNameStd,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}, 
       #{chinaMobile,jdbcType=DECIMAL}, #{chinaUnion,jdbcType=DECIMAL}, #{manAccount,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{id5,jdbcType=DECIMAL}, #{polygonLonlat,jdbcType=VARCHAR}
+      #{updateTime,jdbcType=TIMESTAMP}, #{id5,jdbcType=DECIMAL}, #{polygonLonlat,jdbcType=CLOB}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
@@ -264,7 +287,7 @@
         #{id5,jdbcType=DECIMAL},
       </if>
       <if test="polygonLonlat != null">
-        #{polygonLonlat,jdbcType=VARCHAR},
+        #{polygonLonlat,jdbcType=CLOB},
       </if>
     </trim>
   </insert>
@@ -338,9 +361,36 @@
         ID5 = #{record.id5,jdbcType=DECIMAL},
       </if>
       <if test="record.polygonLonlat != null">
-        POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=VARCHAR},
+        POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=CLOB},
       </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update FIVE_LEVEL_ADDRESS
+    set ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      LON = #{record.lon,jdbcType=DECIMAL},
+      LAT = #{record.lat,jdbcType=DECIMAL},
+      XMAP_LON = #{record.xmapLon,jdbcType=DECIMAL},
+      XMAP_LAT = #{record.xmapLat,jdbcType=DECIMAL},
+      ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      ADDR_LEVEL3 = #{record.addrLevel3,jdbcType=VARCHAR},
+      ADDR_LEVEL4 = #{record.addrLevel4,jdbcType=VARCHAR},
+      ADDR_LEVEL5 = #{record.addrLevel5,jdbcType=VARCHAR},
+      ADDR_LEVEL4_STD = #{record.addrLevel4Std,jdbcType=VARCHAR},
+      ADDR_LEVEL5_STD = #{record.addrLevel5Std,jdbcType=VARCHAR},
+      FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+      FULL_NAME_STD = #{record.fullNameStd,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=DECIMAL},
+      CHINA_MOBILE = #{record.chinaMobile,jdbcType=DECIMAL},
+      CHINA_UNION = #{record.chinaUnion,jdbcType=DECIMAL},
+      MAN_ACCOUNT = #{record.manAccount,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      ID5 = #{record.id5,jdbcType=DECIMAL},
+      POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=CLOB}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -366,8 +416,7 @@
       CHINA_UNION = #{record.chinaUnion,jdbcType=DECIMAL},
       MAN_ACCOUNT = #{record.manAccount,jdbcType=VARCHAR},
       UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
-      ID5 = #{record.id5,jdbcType=DECIMAL},
-      POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=VARCHAR}
+      ID5 = #{record.id5,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -433,9 +482,33 @@
         ID5 = #{id5,jdbcType=DECIMAL},
       </if>
       <if test="polygonLonlat != null">
-        POLYGON_LONLAT = #{polygonLonlat,jdbcType=VARCHAR},
+        POLYGON_LONLAT = #{polygonLonlat,jdbcType=CLOB},
       </if>
     </set>
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
+    update FIVE_LEVEL_ADDRESS
+    set LON = #{lon,jdbcType=DECIMAL},
+      LAT = #{lat,jdbcType=DECIMAL},
+      XMAP_LON = #{xmapLon,jdbcType=DECIMAL},
+      XMAP_LAT = #{xmapLat,jdbcType=DECIMAL},
+      ADDR_LEVEL1 = #{addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{addrLevel2,jdbcType=VARCHAR},
+      ADDR_LEVEL3 = #{addrLevel3,jdbcType=VARCHAR},
+      ADDR_LEVEL4 = #{addrLevel4,jdbcType=VARCHAR},
+      ADDR_LEVEL5 = #{addrLevel5,jdbcType=VARCHAR},
+      ADDR_LEVEL4_STD = #{addrLevel4Std,jdbcType=VARCHAR},
+      ADDR_LEVEL5_STD = #{addrLevel5Std,jdbcType=VARCHAR},
+      FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      FULL_NAME_STD = #{fullNameStd,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      CHINA_MOBILE = #{chinaMobile,jdbcType=DECIMAL},
+      CHINA_UNION = #{chinaUnion,jdbcType=DECIMAL},
+      MAN_ACCOUNT = #{manAccount,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      ID5 = #{id5,jdbcType=DECIMAL},
+      POLYGON_LONLAT = #{polygonLonlat,jdbcType=CLOB}
     where ADDR_ID = #{addrId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="org.buzheng.demo.esm.domain.FiveLevelAddress">
@@ -458,8 +531,7 @@
       CHINA_UNION = #{chinaUnion,jdbcType=DECIMAL},
       MAN_ACCOUNT = #{manAccount,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      ID5 = #{id5,jdbcType=DECIMAL},
-      POLYGON_LONLAT = #{polygonLonlat,jdbcType=VARCHAR}
+      ID5 = #{id5,jdbcType=DECIMAL}
     where ADDR_ID = #{addrId,jdbcType=VARCHAR}
   </update>
 </mapper>

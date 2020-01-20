@@ -16,15 +16,21 @@ public interface FiveLevelAddressMapper {
 
     int insertSelective(FiveLevelAddress record);
 
+    List<FiveLevelAddress> selectByExampleWithBLOBs(FiveLevelAddressExample example);
+
     List<FiveLevelAddress> selectByExample(FiveLevelAddressExample example);
 
     FiveLevelAddress selectByPrimaryKey(String addrId);
 
     int updateByExampleSelective(@Param("record") FiveLevelAddress record, @Param("example") FiveLevelAddressExample example);
 
+    int updateByExampleWithBLOBs(@Param("record") FiveLevelAddress record, @Param("example") FiveLevelAddressExample example);
+
     int updateByExample(@Param("record") FiveLevelAddress record, @Param("example") FiveLevelAddressExample example);
 
     int updateByPrimaryKeySelective(FiveLevelAddress record);
+
+    int updateByPrimaryKeyWithBLOBs(FiveLevelAddress record);
 
     int updateByPrimaryKey(FiveLevelAddress record);
 }

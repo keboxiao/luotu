@@ -148,6 +148,19 @@
         closeButton: true,
     });
     map.on('load', function (e) {
+        map.addSource("image", {
+            "type": "raster",
+            "tileSize": 256,
+            'tiles': ["http://132.102.102.87/raster/{z}/{x}/{y}.png"],    //栅格切片服务地址
+        });
+        map.addLayer({
+            "id": "image_layer",
+            "type": "raster",
+            "source": "image",
+            "layout": {
+                "visibility": "visible"
+            }
+        },"5197dfa7-d65f-4c85-8949-aefb04c61c2f");
         map.on('click', '24426030-3001-4b23-82e2-d9338996019c', function (e) {  //图层点击图层事件
             console.log(e);
             var properties = e.features[0].properties;
@@ -170,8 +183,10 @@
         console.log(event.target.checked);
         if (event.target.checked) {
             map.setLayoutProperty('24426030-3001-4b23-82e2-d9338996019c', 'visibility', 'visible');
+            map.setLayoutProperty('d11e4989-a2e1-47eb-8cd8-69144f7e105c', 'visibility', 'visible'); 
         } else {
             map.setLayoutProperty('24426030-3001-4b23-82e2-d9338996019c', 'visibility', 'none');
+            map.setLayoutProperty('d11e4989-a2e1-47eb-8cd8-69144f7e105c', 'visibility', 'none');
         }
     });
 

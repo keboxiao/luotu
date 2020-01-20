@@ -16,7 +16,7 @@
 		<!--数据库链接URL，用户名、密码 -->
 		<jdbcConnection driverClass="oracle.jdbc.OracleDriver"
 			connectionURL="jdbc:oracle:thin:@132.102.104.138:1521:orcl" userId="ziyuan"
-			password="Zy*201905">
+			password="Mybatis2019">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
@@ -39,7 +39,7 @@
 		</javaClientGenerator>
 
 		<!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
-        <table schema="ziyuan" tableName="FIVE_LEVEL_ADDRESS" domainObjectName="FiveLevelAddress"   >
+        <table schema="ziyuan" tableName="TWO_LEVEL_ADDRESS" domainObjectName="TwoLevelAddress"   >
 			<!-- 如果设置为true，MBG不会讲schema或catalog添加到生成SQL中的表名上。 -->
 	  		<property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>

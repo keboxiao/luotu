@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buzheng.demo.esm.dao.TwoLevelAddressMapper">
+  <resultMap id="BaseResultMap" type="org.buzheng.demo.esm.domain.TwoLevelAddress">
+    <id column="ADDR_ID" jdbcType="VARCHAR" property="addrId" />
+    <result column="ADDR_LEVEL1" jdbcType="VARCHAR" property="addrLevel1" />
+    <result column="ADDR_LEVEL2" jdbcType="VARCHAR" property="addrLevel2" />
+    <result column="FULL_NAME" jdbcType="VARCHAR" property="fullName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.buzheng.demo.esm.domain.TwoLevelAddress">
+    <result column="POLYGON_LONLAT" jdbcType="CLOB" property="polygonLonlat" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ADDR_ID, ADDR_LEVEL1, ADDR_LEVEL2, FULL_NAME
+  </sql>
+  <sql id="Blob_Column_List">
+    POLYGON_LONLAT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddressExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TWO_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TWO_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from TWO_LEVEL_ADDRESS
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TWO_LEVEL_ADDRESS
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddressExample">
+    delete from TWO_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddress">
+    insert into TWO_LEVEL_ADDRESS (ADDR_ID, ADDR_LEVEL1, ADDR_LEVEL2, 
+      FULL_NAME, POLYGON_LONLAT)
+    values (#{addrId,jdbcType=VARCHAR}, #{addrLevel1,jdbcType=VARCHAR}, #{addrLevel2,jdbcType=VARCHAR}, 
+      #{fullName,jdbcType=VARCHAR}, #{polygonLonlat,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddress">
+    insert into TWO_LEVEL_ADDRESS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="addrId != null">
+        ADDR_ID,
+      </if>
+      <if test="addrLevel1 != null">
+        ADDR_LEVEL1,
+      </if>
+      <if test="addrLevel2 != null">
+        ADDR_LEVEL2,
+      </if>
+      <if test="fullName != null">
+        FULL_NAME,
+      </if>
+      <if test="polygonLonlat != null">
+        POLYGON_LONLAT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="addrId != null">
+        #{addrId,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel1 != null">
+        #{addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel2 != null">
+        #{addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="polygonLonlat != null">
+        #{polygonLonlat,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddressExample" resultType="java.lang.Long">
+    select count(*) from TWO_LEVEL_ADDRESS
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TWO_LEVEL_ADDRESS
+    <set>
+      <if test="record.addrId != null">
+        ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel1 != null">
+        ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrLevel2 != null">
+        ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullName != null">
+        FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.polygonLonlat != null">
+        POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update TWO_LEVEL_ADDRESS
+    set ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      FULL_NAME = #{record.fullName,jdbcType=VARCHAR},
+      POLYGON_LONLAT = #{record.polygonLonlat,jdbcType=CLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TWO_LEVEL_ADDRESS
+    set ADDR_ID = #{record.addrId,jdbcType=VARCHAR},
+      ADDR_LEVEL1 = #{record.addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{record.addrLevel2,jdbcType=VARCHAR},
+      FULL_NAME = #{record.fullName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddress">
+    update TWO_LEVEL_ADDRESS
+    <set>
+      <if test="addrLevel1 != null">
+        ADDR_LEVEL1 = #{addrLevel1,jdbcType=VARCHAR},
+      </if>
+      <if test="addrLevel2 != null">
+        ADDR_LEVEL2 = #{addrLevel2,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="polygonLonlat != null">
+        POLYGON_LONLAT = #{polygonLonlat,jdbcType=CLOB},
+      </if>
+    </set>
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddress">
+    update TWO_LEVEL_ADDRESS
+    set ADDR_LEVEL1 = #{addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{addrLevel2,jdbcType=VARCHAR},
+      FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      POLYGON_LONLAT = #{polygonLonlat,jdbcType=CLOB}
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.buzheng.demo.esm.domain.TwoLevelAddress">
+    update TWO_LEVEL_ADDRESS
+    set ADDR_LEVEL1 = #{addrLevel1,jdbcType=VARCHAR},
+      ADDR_LEVEL2 = #{addrLevel2,jdbcType=VARCHAR},
+      FULL_NAME = #{fullName,jdbcType=VARCHAR}
+    where ADDR_ID = #{addrId,jdbcType=VARCHAR}
+  </update>
+</mapper>

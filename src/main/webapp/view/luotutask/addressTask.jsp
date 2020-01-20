@@ -116,7 +116,7 @@ function newCQTTask() {
 	if (r) {
 	$.ajax( {
 		type : 'POST',
-		url : '../../app/translateLonLat',
+		url : '../../app/cqtmatchaddr',
 		data : $('#batchForm').serialize(),
 		dataType : 'json',
 		success : function(r) {
@@ -177,7 +177,7 @@ function matchFiveLevelAddr() {
 				<a href="javascript:void(0);" id="edit"
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="newTask()">新建地址任务</a>
 				<a href="javascript:void(0);" id="edit"
-					class="easyui-linkbutton" iconCls="icon-edit" onclick="newCQTTask()">CQT经纬度转换</a>
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="newCQTTask()">CQT地址匹配</a>
 				<a href="javascript:void(0);" id="edit"
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="matchFiveLevelAddr()">五级地址匹配</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"

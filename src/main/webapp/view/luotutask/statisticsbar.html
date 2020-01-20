@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    legend: {},
+    tooltip: {},
+    dataset: {
+        dimensions: ['area', '优', '良', '中', '差'],
+        source: [
+            {"area":'茂南', '优': 43, '中': 93, '差': 93, '良': 85},
+            {"area":'电白', '优': 83, '中': 55, '差': 55, '良': 73},
+            {"area":'高州', '优': 86, '中': 82, '差': 82, '良': 65},
+            {"area":'信宜', '优': 72, '中': 39, '差': 39, '良': 53},
+			{"area":'化州', '优': 72, '中': 39, '差': 39, '良': 53},
+        ]
+    },
+    xAxis: {type: 'category'},
+    yAxis: {},
+    // Declare several bar series, each will be mapped
+    // to a column of dataset.source by default.
+    series: [
+        {type: 'bar'
+		},
+        {type: 'bar'
+		},
+        {type: 'bar'
+		},
+        {type: 'bar'
+		}
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
