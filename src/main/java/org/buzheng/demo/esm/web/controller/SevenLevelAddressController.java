@@ -78,4 +78,9 @@ public class SevenLevelAddressController {
 		return datagrid;
 	}
 
+	@RequestMapping("searchSevenLevelAddress")
+	@ResponseBody
+	public DataGrid searchSevenLevelAddress(String addr, int page, int rows) {
+		return sevenLevelAddressService.searchSevenLevelAddress(addr, page, rows);
+	}
 }

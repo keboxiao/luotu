@@ -1,6 +1,8 @@
 package org.buzheng.demo.esm.web.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -94,5 +96,23 @@ public class VillageCoverageController {
 		datagrid.setRows(list);
 		datagrid.setTotal(pageInfo.getTotal());
 		return datagrid;
+	}
+	
+	@RequestMapping("getPieDataSet")
+	@ResponseBody
+	public List getPieDataSet(String period) throws IllegalStateException, IOException {
+		String[] strarr = period.split("-");
+		String per = strarr[0] + strarr[1];
+		String sql = "select coverage name, count(*) value" + " from village_coverage where period=" + per
+				+ " group by coverage";
+		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+		List<Map<String, Object>> reslist = new ArrayList<Map<String, Object>>();
+		for(Map<String,Object> tmp : list){
+			Map<String,Object> map=new HashMap<String,Object>();
+			map.put("name", tmp.get("NAME"));
+			map.put("value", tmp.get("VALUE"));
+			reslist.add(map);
+		}
+		return reslist;
 	}
 }

@@ -19,10 +19,13 @@
 					</form>
 					
 					</div>
-       <div id="container" style="height: 100%"></div>
+       <div id="container" style="height: 50%"></div>
+       <div id="piechart" style="height: 40%"></div>
        <script type="text/javascript">
        var dom = document.getElementById("container");
+       var pie = document.getElementById("piechart");
        var myChart = echarts.init(dom);
+       var pieChart = echarts.init(pie);
        var app = {};
        option = null;
        option = {
@@ -85,6 +88,44 @@
        		}
            ]
        };
+       pieoption = null;
+       pieoption = {
+           title: {
+               text: '自然村覆盖统计',
+              // subtext: '纯属虚构',
+               left: 'center'
+           },
+           tooltip: {
+               trigger: 'item',
+               formatter: '{a} <br/>{b} : {c} ({d}%)'
+           },
+           legend: {
+               orient: 'vertical',
+               left: 'left',
+               data: []
+           },
+           series: [
+               {
+                   name: '覆盖统计',
+                   type: 'pie',
+                   radius: '55%',
+                   center: ['50%', '60%'],
+                   data: [
+                       {value: 0, name: '优'},
+                       {value: 0, name: '良'},
+                       {value: 0, name: '中'},
+                       {value: 0, name: '差'}
+                   ],
+                   emphasis: {
+                       itemStyle: {
+                           shadowBlur: 10,
+                           shadowOffsetX: 0,
+                           shadowColor: 'rgba(0, 0, 0, 0.5)'
+                       }
+                   }
+               }
+           ]
+       };
        $(function() {
            $('#birth_year').datebox({
                onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
@@ -126,6 +167,9 @@
 if (option && typeof option === "object") {
     myChart.setOption(option, true);
 }
+if (pieoption && typeof option === "object") {
+    pieChart.setOption(pieoption, true);
+}
        });
        serializeObject = function(form) {
     		var o = {};
@@ -148,6 +192,20 @@ if (option && typeof option === "object") {
     	       success:function(data){
     	   	       option.dataset=data;
     	   	       myChart.setOption(option, true);
+    	   	},
+    	       error:function(){
+    	       	alert('failed!');
+    	       },
+    	   });
+    	   $.ajax
+    	   ({
+    	   	url: "../../app/getPieDataSet",
+    	   	dataType: "json",
+    	   	type: "get",
+    	   	data: $('#form1').serialize(),
+    	       success:function(data){
+    	   	       pieoption.series[0].data=data;
+    	   	       pieChart.setOption(pieoption, true);
     	   	},
     	       error:function(){
     	       	alert('failed!');

@@ -116,7 +116,7 @@ public class CqtRecordServiceImpl implements CqtRecordService {
 		getAddressTask.setTaskType("CQT经纬度转换");
 		CqtRecordExample example = new CqtRecordExample();
 		CqtRecordExample.Criteria criteria = example.createCriteria();
-		criteria.andStateEqualTo(1);
+		criteria.andStateEqualTo(0);
 		List<CqtRecord> list = cqtRecordMapper.selectByExample(example);
 		getAddressTask.setTotal(list.size());
 		int c = 0;
@@ -124,7 +124,7 @@ public class CqtRecordServiceImpl implements CqtRecordService {
 			double[] latlon = GPSUtil.bd09_To_gps84(tmp.getBmapLat().doubleValue(), tmp.getBmapLon().doubleValue());
 			tmp.setLat(new BigDecimal(latlon[0]));
 			tmp.setLon(new BigDecimal(latlon[1]));
-			tmp.setState(2);
+			tmp.setState(1);
 			cqtRecordMapper.updateByPrimaryKeySelective(tmp);
 			c++;
 		}

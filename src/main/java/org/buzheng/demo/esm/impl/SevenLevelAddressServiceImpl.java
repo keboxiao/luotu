@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.buzheng.demo.esm.dao.GetAddressTaskMapper;
 import org.buzheng.demo.esm.dao.SevenLevelAddressMapper;
+import org.buzheng.demo.esm.domain.DataGrid;
+import org.buzheng.demo.esm.domain.FiveLevelAddressExample;
 import org.buzheng.demo.esm.domain.GetAddressTask;
 import org.buzheng.demo.esm.domain.SevenLevelAddress;
 import org.buzheng.demo.esm.domain.SevenLevelAddressExample;
@@ -22,6 +25,8 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 @Service
 public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
@@ -202,4 +207,18 @@ public class SevenLevelAddressServiceImpl implements SevenLevelAddressService {
 		return 0;
 	}
 
+	public DataGrid searchSevenLevelAddress(String addr, int page, int rows) {
+		SevenLevelAddressExample example = new SevenLevelAddressExample();
+		SevenLevelAddressExample.Criteria criteria = example.createCriteria();
+		if (StringUtils.isNotBlank(addr)) {
+			criteria.andFullNameLike("%" + addr + "%");
+		}
+		PageHelper.startPage(page, rows);
+		List list = sevenLevelAddressMapper.selectByExample(example);
+		Page<GetAddressTask> pageInfo = (Page<GetAddressTask>) list;
+		DataGrid datagrid = new DataGrid();
+		datagrid.setRows(list);
+		datagrid.setTotal(pageInfo.getTotal());
+		return datagrid;
+	}
 }

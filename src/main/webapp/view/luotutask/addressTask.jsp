@@ -131,12 +131,50 @@ function newCQTTask() {
 	});
 }
 
+function newCQTLLTask() {
+	$.messager.confirm('确认', '您确定要新建CQT经纬度转换任务吗？', function(r) {
+	if (r) {
+	$.ajax( {
+		type : 'POST',
+		url : '../../app/translateLonLat',
+		data : $('#batchForm').serialize(),
+		dataType : 'json',
+		success : function(r) {
+			$.messager.show( {
+				title : '提示',
+				msg : r.msg
+			});
+			$("#grid").datagrid("load");
+		}
+	});
+	}
+	});
+}
 function matchFiveLevelAddr() {
 	$.messager.confirm('确认', '您确定要新建地址匹配任务吗？', function(r) {
 	if (r) {
 	$.ajax( {
 		type : 'POST',
 		url : '../../app/matchFiveLevelAddr',
+		data : $('#batchForm').serialize(),
+		dataType : 'json',
+		success : function(r) {
+			$.messager.show( {
+				title : '提示',
+				msg : r.msg
+			});
+			$("#grid").datagrid("load");
+		}
+	});
+	}
+	});
+}
+function matchOTBAddr() {
+	$.messager.confirm('确认', '您确定要新建OTB审核任务吗？', function(r) {
+	if (r) {
+	$.ajax( {
+		type : 'POST',
+		url : '../../app/matchOtbAddr',
 		data : $('#batchForm').serialize(),
 		dataType : 'json',
 		success : function(r) {
@@ -177,9 +215,13 @@ function matchFiveLevelAddr() {
 				<a href="javascript:void(0);" id="edit"
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="newTask()">新建地址任务</a>
 				<a href="javascript:void(0);" id="edit"
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="newCQTLLTask()">CQT经纬度转换</a>
+				<a href="javascript:void(0);" id="edit"
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="newCQTTask()">CQT地址匹配</a>
 				<a href="javascript:void(0);" id="edit"
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="matchFiveLevelAddr()">五级地址匹配</a>
+				<a href="javascript:void(0);" id="edit"
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="matchOTBAddr()">OTB经纬度审核</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'" onclick="searchFun();">查询</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"

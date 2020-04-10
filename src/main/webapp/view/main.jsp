@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>门栋落图系统</title>
+<title>业务落图系统</title>
 <script type="text/javascript" src="<%=request.getContextPath() %>/jquery-easyui-1.5.1/jquery.min.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath() %>/jquery-easyui-1.5.1/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="<%=request.getContextPath() %>/jquery-easyui-1.5.1/locale/easyui-lang-zh_CN.js"></script>
@@ -85,7 +85,7 @@ $(function(){
 						<h1>
 							<p align="left"
 									style="filter: shadow (   color =     #111000, direction =     135, strength :     3 ); font-size: 20px; color: #0000C6; font-weight: bold; padding-right: 100px; font-style: italic">
-									&nbsp; &nbsp;门栋落图系统
+									&nbsp; &nbsp;业务落图系统
 							</p>
 						</h1>
 					</td>
