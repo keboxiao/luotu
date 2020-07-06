@@ -5,6 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.buzheng.demo.esm.App;
 import org.buzheng.demo.esm.domain.SysMenu;
 import org.buzheng.demo.esm.domain.SysUser;
@@ -75,6 +78,8 @@ public class AccountController {
 		if (user != null) {
 			logger.info("登陆成功：{}", user);
 			session.setAttribute(App.USER_SESSION_KEY, user);
+			Subject subject = SecurityUtils.getSubject();
+            subject.login(new UsernamePasswordToken(username, password));
 			return new Result();
 		} else {
 			return new Result("用户名密码不匹配");
@@ -85,9 +90,11 @@ public class AccountController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		if (session != null) {
-			session.invalidate();
+			//session.invalidate();
+			session.removeAttribute(App.USER_SESSION_KEY);
 		}
-		
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
 		return "redirect:/";
 	}
 	

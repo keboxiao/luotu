@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.buzheng.demo.esm.dao.BaseStationMapper">
+  <resultMap id="BaseResultMap" type="org.buzheng.demo.esm.domain.BaseStation">
+    <id column="BASE_ID" jdbcType="VARCHAR" property="baseId" />
+    <result column="BASE_NAME" jdbcType="VARCHAR" property="baseName" />
+    <result column="LON" jdbcType="DECIMAL" property="lon" />
+    <result column="LAT" jdbcType="DECIMAL" property="lat" />
+    <result column="SHARE_SITUATION" jdbcType="VARCHAR" property="shareSituation" />
+    <result column="AREA" jdbcType="VARCHAR" property="area" />
+    <result column="AMAP_LON" jdbcType="DECIMAL" property="amapLon" />
+    <result column="AMAP_LAT" jdbcType="DECIMAL" property="amapLat" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="RADIUS" jdbcType="DECIMAL" property="radius" />
+    <result column="COLOR" jdbcType="VARCHAR" property="color" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    BASE_ID, BASE_NAME, LON, LAT, SHARE_SITUATION, AREA, AMAP_LON, AMAP_LAT, UPDATE_TIME, 
+    RADIUS, COLOR, USER_ID
+  </sql>
+  <select id="selectByExample" parameterType="org.buzheng.demo.esm.domain.BaseStationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from BASE_STATION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BASE_STATION
+    where BASE_ID = #{baseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BASE_STATION
+    where BASE_ID = #{baseId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.buzheng.demo.esm.domain.BaseStationExample">
+    delete from BASE_STATION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.buzheng.demo.esm.domain.BaseStation">
+    insert into BASE_STATION (BASE_ID, BASE_NAME, LON, 
+      LAT, SHARE_SITUATION, AREA, 
+      AMAP_LON, AMAP_LAT, UPDATE_TIME, 
+      RADIUS, COLOR, USER_ID
+      )
+    values (#{baseId,jdbcType=VARCHAR}, #{baseName,jdbcType=VARCHAR}, #{lon,jdbcType=DECIMAL}, 
+      #{lat,jdbcType=DECIMAL}, #{shareSituation,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{amapLon,jdbcType=DECIMAL}, #{amapLat,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{radius,jdbcType=DECIMAL}, #{color,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.buzheng.demo.esm.domain.BaseStation">
+    insert into BASE_STATION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="baseId != null">
+        BASE_ID,
+      </if>
+      <if test="baseName != null">
+        BASE_NAME,
+      </if>
+      <if test="lon != null">
+        LON,
+      </if>
+      <if test="lat != null">
+        LAT,
+      </if>
+      <if test="shareSituation != null">
+        SHARE_SITUATION,
+      </if>
+      <if test="area != null">
+        AREA,
+      </if>
+      <if test="amapLon != null">
+        AMAP_LON,
+      </if>
+      <if test="amapLat != null">
+        AMAP_LAT,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="radius != null">
+        RADIUS,
+      </if>
+      <if test="color != null">
+        COLOR,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="baseId != null">
+        #{baseId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseName != null">
+        #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        #{lon,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="shareSituation != null">
+        #{shareSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="amapLon != null">
+        #{amapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="amapLat != null">
+        #{amapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="radius != null">
+        #{radius,jdbcType=DECIMAL},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.buzheng.demo.esm.domain.BaseStationExample" resultType="java.lang.Long">
+    select count(*) from BASE_STATION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update BASE_STATION
+    <set>
+      <if test="record.baseId != null">
+        BASE_ID = #{record.baseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseName != null">
+        BASE_NAME = #{record.baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lon != null">
+        LON = #{record.lon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lat != null">
+        LAT = #{record.lat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shareSituation != null">
+        SHARE_SITUATION = #{record.shareSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        AREA = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amapLon != null">
+        AMAP_LON = #{record.amapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="record.amapLat != null">
+        AMAP_LAT = #{record.amapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.radius != null">
+        RADIUS = #{record.radius,jdbcType=DECIMAL},
+      </if>
+      <if test="record.color != null">
+        COLOR = #{record.color,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update BASE_STATION
+    set BASE_ID = #{record.baseId,jdbcType=VARCHAR},
+      BASE_NAME = #{record.baseName,jdbcType=VARCHAR},
+      LON = #{record.lon,jdbcType=DECIMAL},
+      LAT = #{record.lat,jdbcType=DECIMAL},
+      SHARE_SITUATION = #{record.shareSituation,jdbcType=VARCHAR},
+      AREA = #{record.area,jdbcType=VARCHAR},
+      AMAP_LON = #{record.amapLon,jdbcType=DECIMAL},
+      AMAP_LAT = #{record.amapLat,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      RADIUS = #{record.radius,jdbcType=DECIMAL},
+      COLOR = #{record.color,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.buzheng.demo.esm.domain.BaseStation">
+    update BASE_STATION
+    <set>
+      <if test="baseName != null">
+        BASE_NAME = #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        LON = #{lon,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null">
+        LAT = #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="shareSituation != null">
+        SHARE_SITUATION = #{shareSituation,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="amapLon != null">
+        AMAP_LON = #{amapLon,jdbcType=DECIMAL},
+      </if>
+      <if test="amapLat != null">
+        AMAP_LAT = #{amapLat,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="radius != null">
+        RADIUS = #{radius,jdbcType=DECIMAL},
+      </if>
+      <if test="color != null">
+        COLOR = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BASE_ID = #{baseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.buzheng.demo.esm.domain.BaseStation">
+    update BASE_STATION
+    set BASE_NAME = #{baseName,jdbcType=VARCHAR},
+      LON = #{lon,jdbcType=DECIMAL},
+      LAT = #{lat,jdbcType=DECIMAL},
+      SHARE_SITUATION = #{shareSituation,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR},
+      AMAP_LON = #{amapLon,jdbcType=DECIMAL},
+      AMAP_LAT = #{amapLat,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      RADIUS = #{radius,jdbcType=DECIMAL},
+      COLOR = #{color,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where BASE_ID = #{baseId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>5G站点分布图高德版</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script type="text/javascript" src="../../jquery-easyui-1.5.1/jquery.min.js"></script>
+</head>
+<style type="text/css">
+    html,body{
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+    }
+    .map{
+        height: 100%;
+        width: 100%;
+        float: left;
+    }
+</style>
+<body>
+<div id="container" class="map"></div>
+<div class="input-card">
+    <select id="pid" onchange="gradeChange()">
+  	<option value="1">茂名</option>
+  	<option value="2">茂南区</option>
+  	<option value="3">电白区</option>
+  	<option value="4">高州市</option>
+  	<option value="5">信宜市</option>
+  	<option value="6">化州市</option>
+	</select>
+</div>
+
+<script src="https://webapi.amap.com/maps?v=1.4.14&key=5e07&plugin=AMap.Scale"></script>
+<script>
+var map = new AMap.Map('container', {
+    resizeEnable: true,
+    zoom:15,
+    center: [110.937012434,21.666752994]
+});
+function gradeChange(){
+    var objS = document.getElementById("pid");
+    var grade = objS.options[objS.selectedIndex].value;
+    if(grade==2){
+    	var markerPosition = [110.92358,21.66652];
+    	map.panTo(markerPosition); 
+	} else if(grade==3){
+		var markerPosition = [111.00834,21.52391];
+    	map.panTo(markerPosition); 
+		//dingwei(111.00834,21.52391);
+	} else if(grade==4){
+		var markerPosition = [110.847157,21.920561];
+    	map.panTo(markerPosition); 
+		//dingwei(110.847157,21.920561);
+	} else if(grade==5){
+		var markerPosition = [110.935204,22.351401];
+    	map.panTo(markerPosition); 
+		//dingwei(110.935204,22.351401);
+	} else if(grade==6){
+		var markerPosition = [110.639249,21.66005];
+    	map.panTo(markerPosition); 
+		//dingwei(110.639249,21.66005);
+	}
+}
+    // 构造点标记
+var marker = new AMap.Marker({
+    icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+    position: [110.937012434,21.666752994]
+});
+    
+$.getJSON('../../app/getAllBaseStation',function(bases){
+	var baseList = [];
+	for(var i=0; i<bases.length; i++)  { 
+		// 构造矢量圆形
+		var circle = new AMap.Circle({
+    		center: new AMap.LngLat(bases[i].amapLon, bases[i].amapLat), // 圆心位置
+    		radius: 300,  //半径
+    		strokeColor: "#F33",  //线颜色
+    		strokeOpacity: 0,  //线透明度
+    		strokeWeight: 3,  //线粗细度
+    		fillColor: "#46bee9",  //填充颜色
+    		fillOpacity: 0.35 //填充透明度
+		});
+		baseList.push(circle);
+	}
+	map.add(baseList);
+	map.addControl(new AMap.Scale());
+})
+
+</script>
+</body>
+</html>

@@ -29,4 +29,21 @@ public class TOtbController {
 		j.setMsg(msg);
 		return j;
 	}
+	
+	@RequestMapping("generateServiceArea")
+	@ResponseBody
+	public Json generateServiceArea() {
+		new Thread() {
+            public void run() {
+                // 写自己的业务逻辑
+            	tOtbService.matchAddress();
+            }
+        }.start();
+
+		Json j = new Json();
+		String msg = "成功添加服务区计算任务";
+		j.setSuccess(true);
+		j.setMsg(msg);
+		return j;
+	}
 }

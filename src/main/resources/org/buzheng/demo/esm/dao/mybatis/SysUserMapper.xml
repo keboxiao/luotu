@@ -69,6 +69,9 @@
 	        <if test="params.name != null">
 	            u.name = #{params.name}
 	        </if>
+	        <if test="params.username != null">
+	            u.username = #{params.username}
+	        </if>
 	    </where>
 	    
 	    ORDER BY u.add_time

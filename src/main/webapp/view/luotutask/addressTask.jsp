@@ -188,6 +188,26 @@ function matchOTBAddr() {
 	}
 	});
 }
+
+function generateServiceArea() {
+	$.messager.confirm('确认', '您确定要新建服务区计算任务吗？', function(r) {
+	if (r) {
+	$.ajax( {
+		type : 'POST',
+		url : '../../app/generateServiceArea',
+		data : $('#batchForm').serialize(),
+		dataType : 'json',
+		success : function(r) {
+			$.messager.show( {
+				title : '提示',
+				msg : r.msg
+			});
+			$("#grid").datagrid("load");
+		}
+	});
+	}
+	});
+}
 </script>
 
 	</head>
@@ -222,6 +242,8 @@ function matchOTBAddr() {
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="matchFiveLevelAddr()">五级地址匹配</a>
 				<a href="javascript:void(0);" id="edit"
 					class="easyui-linkbutton" iconCls="icon-edit" onclick="matchOTBAddr()">OTB经纬度审核</a>
+				<a href="javascript:void(0);" id="edit"
+					class="easyui-linkbutton" iconCls="icon-edit" onclick="generateServiceArea()">计算服务区</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-search'" onclick="searchFun();">查询</a>
 				<a href="javascript:void(0);" class="easyui-linkbutton"

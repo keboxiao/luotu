@@ -2,6 +2,7 @@ package org.buzheng.demo.esm.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.buzheng.demo.esm.dao.FiveLevelAddressMapper;
 import org.buzheng.demo.esm.dao.GetAddressTaskMapper;
@@ -113,12 +114,17 @@ public class TOtbServiceImpl implements TOtbService {
 			DataGrid datagrid = sevenLevelAddressService.searchSevenLevelAddress(null, page, 15);
 			List<SevenLevelAddress> list = datagrid.getRows();
 			for (SevenLevelAddress tmp : list) {
-				String addr = tmp.getAddrLevel1()+tmp.getAddrLevel2()+tmp.getAddrLevel3()+tmp.getAddrLevel4()+tmp.getAddrLevel5();
-				TOtbExample oexample = new TOtbExample();
-				TOtbExample.Criteria ocriteria = oexample.createCriteria();
-				ocriteria.andAddr5FullnameEqualTo(addr);
-				List<TOtb> otbList = tOtbMapper.selectByExample(oexample);
-				for (TOtb otmp : otbList) {
+				String sql = "select otb_code,otb_name,polygon_lonlat,GETDISTANCE('" + tmp.getLat() + "','"
+						+ tmp.getLon()
+						+ "', lat, lon) distance from t_otb a inner join five_level_address b on a.addr5_id=b.addr_id where a.addr_level2='"
+						+ tmp.getAddrLevel2()+"' and a.addr_level3='"+tmp.getAddrLevel3() + "' order by distance";
+				sql = "SELECT tmp_page.*, rownum AS row_id FROM (" + sql + ") tmp_page WHERE rownum <= 5";
+				List<Map<String, Object>> tmpList = jdbcTemplate.queryForList(sql);
+				//List<TOtb> otbList = tOtbMapper.selectByExample(oexample);
+				for (Map<String, Object> mso : tmpList) {
+					TOtb otmp = new TOtb();
+					otmp.setOtbCode(mso.get("otb_code").toString());
+					otmp.setPolygonLonlat(mso.get("polygon_lonlat").toString());
 					if(otmp.isInsidePolygon(tmp.getLon().doubleValue(), tmp.getLat().doubleValue())){
 						ServiceArea serviceArea = new ServiceArea();
 						serviceArea.setAddrFullname(tmp.getFullName());

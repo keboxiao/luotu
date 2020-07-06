@@ -16,40 +16,65 @@
 		<property name="cacheSeconds" value="3000" />
 	</bean>
 
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="10240000">
+	<!-- 安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realms">
+			<list>
+				<ref bean="securityRealm" />
+			</list>
 		</property>
-		<property name="maxInMemorySize" value="4096">
+		<!-- cacheManager,集合spring缓存工厂 -->
+		<!-- <property name="cacheManager" ref="shiroEhcacheManager" /> -->
+		<!-- <property name="sessionManager" ref="sessionManager" /> -->
+	</bean>
+
+	<!-- Shiro生命周期处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/index.jsp" />
+		<property name="successUrl" value="/view/main.jsp" />
+		<property name="unauthorizedUrl" value="/index.jsp" />
+		<!-- 声明自定义标签 hasAnyRoles -->
+		<property name="filters">
+			<map>
+				<entry key="hasAnyRoles" value-ref="anyRolesAuthorizationFilter" />
+			</map>
+		</property>
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- 静态资源允许访问 -->
+				/css/** = anon
+				/js/** = anon
+				/jquery-easyui-1.5.1/** = anon
+				/index.jsp = anon
+				/login.jsp = anon
+				<!-- 登录uri许访问 -->
+				/app/login = anon
+				/app/getAllBaseStation = anon
+				<!-- 其他资源需要认证 -->
+				/view/system/menu.jsp = authc,hasAnyRoles[root]
+				/app/page/sysmenu = authc,hasAnyRoles[root]
+				/view/system/role.jsp = authc,roles[root]
+				/app/page/sysrole = authc,hasAnyRoles[root]
+				/** = authc
+				<!--/** = anon -->
+			</value>
 		</property>
 	</bean>
 
+	<!-- 缓存管理器 使用Ehcache实现 -->
+	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:config/ehcache-shiro.xml" />
+	</bean>
+	
 	<!-- Scans the classpath of this application for @Components to deploy as 
 		beans -->
-	<context:component-scan base-package="org.buzheng.demo.esm" />
+	<context:component-scan base-package="org.buzheng.demo.esm,com.chinatelecom" />
 
 	<!-- Configures the @Controller programming model -->
 	<!--mvc:annotation-driven / -->
-
-	<mvc:annotation-driven>
-		<mvc:message-converters register-defaults="false">
-			<bean
-				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-				<property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-
-	<mvc:interceptors>
-		<bean class="org.buzheng.demo.esm.web.interceptor.SessionInterceptor" />
-	</mvc:interceptors>
-
-	<!-- Resolves view names to protected .jsp resources within the /WEB-INF/views 
-		directory -->
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/view/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
 
 	<import resource="applicationContext-*.xml" />
 </beans>
